@@ -31,20 +31,20 @@
 </div>
 
 <script type="module">
-    // 1. Pega o ID do livro que você salvou no LocalStorage ao clicar na index
     const livroId = localStorage.getItem('livro_atual'); 
     let currentBook = null;
-    let currentPage = 0;
+    
+    // 1. Tenta recuperar a página salva, se não existir, começa da 0
+    let currentPage = parseInt(localStorage.getItem(`page_save_${livroId}`)) || 0;
 
     async function carregarLivro() {
         try {
-            // 2. A MÁGICA: Ele importa apenas o arquivo do livro clicado
             const modulo = await import(`./livros/${livroId}.js`);
             currentBook = modulo.dados;
             renderizar();
         } catch (err) {
             console.error("Erro ao carregar o livro:", err);
-            alert("Arquivo do livro não encontrado!");
+            window.location.href = 'index.html';
         }
     }
 
@@ -52,6 +52,9 @@
         const body = document.getElementById('read-body');
         document.getElementById('read-title').innerText = currentBook.title;
         
+        // 2. Salva a página atual no navegador toda vez que renderiza
+        localStorage.setItem(`page_save_${livroId}`, currentPage);
+
         body.style.opacity = 0;
         setTimeout(() => {
             body.innerHTML = `<p>${currentBook.pages[currentPage]}</p>`;
@@ -64,13 +67,15 @@
         document.getElementById('nextBtn').disabled = (currentPage === currentBook.pages.length - 1);
     }
 
-    // Funções globais para os botões funcionarem com type="module"
     window.changePage = (direction) => {
         currentPage += direction;
         renderizar();
     };
 
     window.closeBook = () => {
+        // Opcional: Se quiser que ao "Fechar" ele limpe o progresso, 
+        // descomente a linha abaixo. Mas o ideal é manter salvo.
+        // localStorage.removeItem(`page_save_${livroId}`);
         window.location.href = 'index.html';
     };
 
