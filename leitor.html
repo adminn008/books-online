@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETERNA | Reader</title>
+    <style>
+        body { background: #050505; color: #ccc; font-family: 'Inter', serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        .nav-top { padding: 20px; border-bottom: 1px solid #111; display: flex; justify-content: space-between; }
+        #conteudo { flex: 1; padding: 40px; max-width: 600px; margin: 0 auto; line-height: 1.8; font-size: 1.2rem; animation: fadeIn 0.5s; }
+        .controles { padding: 30px; display: flex; justify-content: center; gap: 40px; border-top: 1px solid #111; }
+        button { background: none; border: 1px solid #333; color: #fff; padding: 10px 25px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #fff; color: #000; }
+        #num-pagina { color: #555; font-size: 0.8rem; margin-top: 10px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="nav-top">
+    <span id="titulo-livro" style="color:#fff; font-weight:bold;"></span>
+    <a href="index.html" style="color:#666; text-decoration:none;">FECHAR</a>
+</div>
+
+<div id="conteudo"></div>
+
+<div class="controles">
+    <button onclick="voltar()">ANTERIOR</button>
+    <div id="num-pagina"></div>
+    <button onclick="proximo()">PRÓXIMA</button>
+</div>
+
+<script src="livros.js"></script>
+<script>
+    const livroId = localStorage.getItem('livro_atual');
+    const livro = biblioteca[livroId];
+    let paginaAtual = 0;
+
+    function renderizar() {
+        document.getElementById('titulo-livro').innerText = livro.titulo;
+        document.getElementById('conteudo').innerHTML = `<p>${livro.paginas[paginaAtual]}</p>`;
+        document.getElementById('num-pagina').innerText = `PÁGINA ${paginaAtual + 1} DE ${livro.paginas.length}`;
+        window.scrollTo(0,0);
+    }
+
+    function proximo() {
+        if (paginaAtual < livro.paginas.length - 1) {
+            paginaAtual++;
+            renderizar();
+        }
+    }
+
+    function voltar() {
+        if (paginaAtual > 0) {
+            paginaAtual--;
+            renderizar();
+        }
+    }
+
+    if(livro) renderizar();
+    else window.location.href = 'index.html';
+</script>
+</body>
+</html>
