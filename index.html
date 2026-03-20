@@ -313,21 +313,20 @@
         });
     }
 
-    function copyText(txt) {
-        navigator.clipboard.writeText(txt);
-        const t = document.getElementById("toast");
-        t.innerText = "COPIADO";
-        t.className = "show";
-        setTimeout(() => { t.className = t.className.replace("show", ""); }, 2000);
-    }
-
-            function copyPix() {
-    const key = document.getElementById('pixKey').innerText;
-    navigator.clipboard.writeText(key);
+    function copiarPix() {
+    const chave = document.getElementById('chavePix').innerText;
+    navigator.clipboard.writeText(chave);
     
-    const btn = document.getElementById('pixBtn');
-    btn.innerText = "COPIADO!";
-    setTimeout(() => { btn.innerText = "COPIAR CHAVE"; }, 2000);
+    const btn = document.getElementById('btnPix');
+    const originalText = btn.innerText;
+    
+    btn.innerText = "COPIADO";
+    btn.style.background = "#4dff4d"; // Fica verde rapidinho pra dar o feedback
+    
+    setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.background = "#fff";
+    }, 2000);
 }
 
 </script>
