@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>AETERNA | Central de Comando</title>
+    <style>
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
+        .login-box { max-width: 300px; margin: 100px auto; text-align: center; }
+        input { background: #000; border: 1px solid #222; padding: 15px; color: #fff; width: 100%; margin-bottom: 10px; }
+        .msg-card { background: #0d0d0d; border: 1px solid #1a1a1a; padding: 20px; margin-bottom: 15px; border-radius: 4px; }
+        .msg-card h4 { margin: 0 0 10px 0; color: #555; font-size: 0.8rem; }
+        .msg-card p { margin: 0; line-height: 1.6; }
+        #painel { display: none; max-width: 800px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+
+    <div id="login" class="login-box">
+        <h2 style="font-family: 'Cinzel'; letter-spacing: 5px;">ACESSO PRIVADO</h2>
+        <input type="password" id="pass" placeholder="SENHA DO ARQUIVO">
+        <button onclick="checkPass()" style="width: 100%; padding: 10px; cursor:pointer;">ENTRAR</button>
+    </div>
+
+    <div id="painel">
+        <h1 style="font-family: 'Cinzel'; letter-spacing: 10px;">MENSAGENS RECEBIDAS</h1>
+        <div id="lista-mensagens">Carregando...</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCtMFYHMakcPHR6HPfHK7Na54RKsCqzWPc",
+            databaseURL: "https://chat-anonimo-a9076-default-rtdb.firebaseio.com",
+            projectId: "chat-anonimo-a9076",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.checkPass = function() {
+            const pass = document.getElementById('pass').value;
+            if(pass === "Aeterna2026") { // <--- MUDE SUA SENHA AQUI
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('painel').style.display = 'block';
+                carregarMensagens();
+            } else {
+                alert("Senha incorreta.");
+            }
+        }
+
+        function carregarMensagens() {
+            const msgRef = ref(db, 'mensagens');
+            onValue(msgRef, (snapshot) => {
+                const data = snapshot.val();
+                const lista = document.getElementById('lista-mensagens');
+                lista.innerHTML = '';
+                
+                if (data) {
+                    Object.keys(data).reverse().forEach(key => {
+                        const m = data[key];
+                        lista.innerHTML += `
+                            <div class="msg-card">
+                                <h4>DE: ${m.remetente.toUpperCase()}</h4>
+                                <p>${m.texto}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    lista.innerHTML = '<p style="color: #333;">Nenhuma mensagem no arquivo.</p>';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
