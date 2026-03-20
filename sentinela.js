@@ -1,8 +1,9 @@
-const biblioteca = {
+export const dados = {
     'sentinela': {
     title: 'O Sentinela de Pedra',
     author: 'AETERNA IA',
     pages: [
+        "Página 1:
         "O vento não apenas soprava no cume; ele sussurrava nomes que a história havia esquecido. Wellington observava, do alto de sua torre, os três dentes de pedra que apontavam para o firmamento como garras de um gigante enterrado. Eram 800 dias de vigília. 800 dias desde que o primeiro bloco fora colocado, e o silêncio daquela montanha nunca pareceu tão barulhento quanto naquela noite de lua sangrenta.",
         "A arquitetura do Pico da Sentinela era um triunfo da vontade humana sobre a natureza bruta. Escadarias internas serpenteavam as entranhas da rocha, iluminadas por tochas de alma que projetavam sombras dançantes e azuladas nas paredes. Mas, enquanto Wellington descia para os níveis inferiores, percebeu que as sombras não estavam apenas seguindo seus movimentos; elas pareciam ter um atraso, um ritmo próprio, como se algo estivesse se desprendendo das paredes.",
         "Ao chegar no grande salão das inscrições, um calafrio percorreu sua espinha. Os blocos de obsidiana, conhecidos por sua dureza inquebrável, apresentavam rachaduras finas, quase imperceptíveis, que exalavam um vapor escuro. Não era fumaça, era algo mais denso, com cheiro de terra molhada e metal antigo. As coordenadas gravadas no altar central pareciam estar mudando, os números girando como se a própria bússola do mundo tivesse enlouquecido.",
@@ -16,5 +17,6 @@ const biblioteca = {
         "A terra começou a se inclinar. A montanha estava se erguendo, sacudindo as florestas e rios como se fossem poeira. Wellington cravou suas mãos nas fendas da obsidiana. Ele não podia impedir o despertar, mas podia guiar a criatura. Usando o conhecimento de 800 dias de exploração, ele encontrou o ponto de pressão exato, o nexo de redstone que ligava sua alma à alma da montanha fria.",
         "Em um último esforço, ele gritou para o vazio, aceitando o fardo. A luz violeta foi absorvida por seu corpo, seus olhos refletindo agora o mesmo brilho das figuras das sombras. O Pico da Sentinela parou de tremer. A montanha se acalmou, mas o preço fora pago: Wellington não era mais apenas um habitante, ele era parte da estrutura. O guardião eterno, fundido ao trono de pedra que ele mesmo erguera.",
         "O sol nasceu no 801º dia, iluminando uma montanha que parecia comum para qualquer viajante distante. Mas quem olhasse de perto veria que os três dentes de pedra agora brilhavam com uma serenidade eterna. Lá no alto, o Sentinela permanecia imóvel, vigiando um mundo que nunca saberia o quão perto esteve do fim. A biblioteca de Aeterna agora guardava mais um registro: a crônica do homem que se tornou montanha."
+        "Página 2:
     ]
 }
