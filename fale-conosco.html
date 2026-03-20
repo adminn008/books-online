@@ -3,56 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>AETERNA | Contact Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
         body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .form-container { width: 100%; max-width: 450px; padding: 40px; border: 1px solid #1a1a1a; background: #080808; }
-        h1 { font-family: 'Cinzel'; letter-spacing: 10px; font-size: 1.5rem; margin-bottom: 30px; text-align: center; }
-        p { font-size: 0.8rem; color: #555; line-height: 1.6; margin-bottom: 30px; }
-        input, textarea { width: 100%; background: #000; border: 1px solid #222; padding: 15px; color: #fff; margin-bottom: 20px; outline: none; box-sizing: border-box; }
+        .form-container { width: 100%; max-width: 450px; padding: 40px; border: 1px solid #1a1a1a; background: #080808; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { font-family: 'Cinzel', serif; letter-spacing: 10px; font-size: 1.5rem; margin-bottom: 20px; text-align: center; color: #fff; }
+        p { font-size: 0.8rem; color: #555; line-height: 1.6; margin-bottom: 30px; text-align: center; }
+        
+        input, textarea { width: 100%; background: #000; border: 1px solid #222; padding: 15px; color: #fff; margin-bottom: 20px; outline: none; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.3s; }
         input:focus, textarea:focus { border-color: #fff; }
-        button { width: 100%; padding: 15px; background: #fff; color: #000; border: none; font-weight: bold; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; }
-        button:hover { background: #ccc; }
-        .back { display: block; text-align: center; margin-top: 20px; color: #333; text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; }
+        
+        button { width: 100%; padding: 15px; background: #fff; color: #000; border: none; font-weight: bold; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        button:hover { background: #ccc; transform: translateY(-2px); }
+        
+        .back { display: block; text-align: center; margin-top: 25px; color: #333; text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; }
+        .back:hover { color: #fff; }
     </style>
 </head>
 <body>
-    
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCtMFYHMakcPHR6HPfHK7Na54RKsCqzWPc",
-    authDomain: "chat-anonimo-a9076.firebaseapp.com",
-    databaseURL: "https://chat-anonimo-a9076-default-rtdb.firebaseio.com",
-    projectId: "chat-anonimo-a9076",
-    storageBucket: "chat-anonimo-a9076.firebasestorage.app",
-    messagingSenderId: "1098662627081",
-    appId: "1:1098662627081:web:80f095fab4835c23e4b5d8"
-  };
+    <div class="form-container">
+        <h1>CONTATO</h1>
+        <p>Utilize o formulário abaixo para enviar mensagens, sugestões ou relatórios ao Arquivo AETERNA. Sua mensagem será armazenada em nosso banco de dados privado.</p>
+        
+        <form id="contactForm">
+            <input type="text" id="nome" placeholder="SEU NOME" required>
+            <textarea id="mensagem" rows="5" placeholder="SUA MENSAGEM" required></textarea>
+            <button type="submit" id="btnEnviar">ENVIAR AO ARQUIVO</button>
+        </form>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  document.getElementById('contactForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const nome = document.getElementById('nome').value;
-    const mensagem = document.getElementById('mensagem').value;
-
-    push(ref(db, 'mensagens'), {
-      remetente: nome,
-      texto: mensagem,
-      timestamp: serverTimestamp()
-    }).then(() => {
-      alert("Mensagem enviada com sucesso!");
-      document.getElementById('contactForm').reset();
-    }).catch((error) => {
-      alert("Erro ao enviar: " + error.message);
-    });
-  });
-</script>
-
+        <a href="index.html" class="back">← VOLTAR AO INÍCIO</a>
     </div>
+
+    <script type="module">
+        // Importando as funções necessárias do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Sua configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCtMFYHMakcPHR6HPfHK7Na54RKsCqzWPc",
+            authDomain: "chat-anonimo-a9076.firebaseapp.com",
+            databaseURL: "https://chat-anonimo-a9076-default-rtdb.firebaseio.com",
+            projectId: "chat-anonimo-a9076",
+            storageBucket: "chat-anonimo-a9076.firebasestorage.app",
+            messagingSenderId: "1098662627081",
+            appId: "1:1098662627081:web:80f095fab4835c23e4b5d8"
+        };
+
+        // Inicializando o Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Lógica de envio
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnEnviar');
+            const nome = document.getElementById('nome').value;
+            const mensagem = document.getElementById('mensagem').value;
+
+            // Desativa o botão para evitar cliques duplos
+            btn.innerText = "ENVIANDO...";
+            btn.disabled = true;
+
+            push(ref(db, 'mensagens'), {
+                remetente: nome,
+                texto: mensagem,
+                timestamp: serverTimestamp()
+            }).then(() => {
+                alert("Mensagem enviada com sucesso para o Arquivo!");
+                document.getElementById('contactForm').reset();
+            }).catch((error) => {
+                alert("Erro ao enviar: " + error.message);
+            }).finally(() => {
+                btn.innerText = "ENVIAR AO ARQUIVO";
+                btn.disabled = false;
+            });
+        });
+    </script>
+
 </body>
 </html>
