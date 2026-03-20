@@ -1,19 +1,20 @@
 const biblioteca = {
     'sentinela': {
-        title: 'O Sentinela de Pedra',
-        author: 'Gerado por IA',
-        pages: [
-            "O vento uivava entre os três dentes de pedra no topo da montanha. Ninguém sabia quem os colocara lá, mas todos sentiam o peso de sua vigília de 800 dias.",
-            "Página 2: As sombras se moviam conforme o sol se punha, revelando inscrições antigas na base da rocha que Wellington nunca tinha visto antes.",
-            "Página 3: [Cole o restante do seu conto de 13 páginas aqui...]"
-        ]
-    },
-    'noite': {
-        title: 'Noite na Taverna',
-        author: 'Álvares de Azevedo',
-        pages: [
-            "Era uma noite sombria. O vinho corria pelas taças enquanto os jovens contavam histórias de amores perdidos e sombras que caminham...",
-            "Página 2: O relógio da torre bateu as doze badaladas, e um frio repentino tomou conta do recinto."
-        ]
-    }
-};
+    title: 'O Sentinela de Pedra',
+    author: 'AETERNA IA',
+    pages: [
+        "O vento não apenas soprava no cume; ele sussurrava nomes que a história havia esquecido. Wellington observava, do alto de sua torre, os três dentes de pedra que apontavam para o firmamento como garras de um gigante enterrado. Eram 800 dias de vigília. 800 dias desde que o primeiro bloco fora colocado, e o silêncio daquela montanha nunca pareceu tão barulhento quanto naquela noite de lua sangrenta.",
+        "A arquitetura do Pico da Sentinela era um triunfo da vontade humana sobre a natureza bruta. Escadarias internas serpenteavam as entranhas da rocha, iluminadas por tochas de alma que projetavam sombras dançantes e azuladas nas paredes. Mas, enquanto Wellington descia para os níveis inferiores, percebeu que as sombras não estavam apenas seguindo seus movimentos; elas pareciam ter um atraso, um ritmo próprio, como se algo estivesse se desprendendo das paredes.",
+        "Ao chegar no grande salão das inscrições, um calafrio percorreu sua espinha. Os blocos de obsidiana, conhecidos por sua dureza inquebrável, apresentavam rachaduras finas, quase imperceptíveis, que exalavam um vapor escuro. Não era fumaça, era algo mais denso, com cheiro de terra molhada e metal antigo. As coordenadas gravadas no altar central pareciam estar mudando, os números girando como se a própria bússola do mundo tivesse enlouquecido.",
+        "Ele se aproximou do parapeito de pedra. Lá embaixo, as vilas que antes eram pontos de luz no horizonte haviam sumido na névoa. O mapa que ele conhecia de cor estava se transformando. 'O Sentinela não protege a montanha', uma voz rouca ecoou vinda de dentro de sua própria mente, 'o Sentinela é o que impede que a montanha acorde'. O coração de Wellington martelava contra as costelas enquanto ele corria de volta para a escadaria principal.",
+        "Cada degrau parecia mais longo que o anterior. O som de passos metálicos ecoava logo atrás dele. Quando ele parava, o som parava. Quando ele corria, o som se multiplicava. Ao olhar para trás, viu apenas o vazio do corredor azulado, mas o ar estava pesado, carregado de uma eletricidade estática que fazia os pelos de seus braços se arrepiarem. Ele não estava mais sozinho em sua fortaleza de 800 dias.",
+        "Ele chegou à sala de controle, onde os mecanismos de redstone pulsavam como o sistema nervoso da montanha. Mas os pistões estavam travados. Alavancas que ele mesmo instalou haviam sido arrancadas por uma força bruta. No centro da sala, um livro de penas estava aberto sobre a mesa. A caligrafia era a dele, mas as palavras contavam eventos que ainda não haviam acontecido: a queda da torre, o grito da terra e o despertar do que jazia sob os três dentes.",
+        "Um estrondo surdo sacudiu toda a fundação do Pico. Blocos de pedra bruta despencaram do teto, revelando cavidades que não deveriam existir. Dentro delas, Wellington viu não minérios ou terra, mas ossos colossais, fossilizados na própria estrutura da montanha. O Pico da Sentinela não era apenas uma base; era uma sela construída sobre o dorso de uma criatura que o tempo tentou, sem sucesso, apagar da memória.",
+        "Ele correu para a varanda externa, buscando o ar gelado da noite. A visão era aterrorizante: os três dentes de pedra estavam brilhando com uma luz violeta intensa. Eles não eram ornamentos arquitetônicos, eram condutores. A energia acumulada durante séculos de silêncio estava sendo drenada para o céu, rasgando as nuvens e revelando um vazio estelar que não pertencia àquele universo. O fim do ciclo estava próximo.",
+        "As sombras que ele vira nos corredores agora tomavam forma física no pátio da Sentinela. Eram figuras altas, esguias, com olhos que lembravam o brilho final de uma estrela moribunda. Elas não atacavam; apenas observavam, apontando para o trono de pedra no topo da torre. Wellington entendeu que a coroa de líder do Grêmio de sua própria história agora exigia um sacrifício de coragem que nenhum manual de construção poderia ensinar.",
+        "Ele subiu ao ponto mais alto, onde o vento era tão forte que ameaçava lançá-lo no abismo. Diante dele, os dentes de pedra vibravam em uma frequência que fazia o próprio espaço-tempo parecer líquido. Ele tocou a pedra central, e uma visão o atingiu: mil anos de história, mil heróis que construíram suas torres antes dele, todos tentando manter o monstro adormecido. Ele era apenas o mais recente em uma linhagem de guardiões.",
+        "A terra começou a se inclinar. A montanha estava se erguendo, sacudindo as florestas e rios como se fossem poeira. Wellington cravou suas mãos nas fendas da obsidiana. Ele não podia impedir o despertar, mas podia guiar a criatura. Usando o conhecimento de 800 dias de exploração, ele encontrou o ponto de pressão exato, o nexo de redstone que ligava sua alma à alma da montanha fria.",
+        "Em um último esforço, ele gritou para o vazio, aceitando o fardo. A luz violeta foi absorvida por seu corpo, seus olhos refletindo agora o mesmo brilho das figuras das sombras. O Pico da Sentinela parou de tremer. A montanha se acalmou, mas o preço fora pago: Wellington não era mais apenas um habitante, ele era parte da estrutura. O guardião eterno, fundido ao trono de pedra que ele mesmo erguera.",
+        "O sol nasceu no 801º dia, iluminando uma montanha que parecia comum para qualquer viajante distante. Mas quem olhasse de perto veria que os três dentes de pedra agora brilhavam com uma serenidade eterna. Lá no alto, o Sentinela permanecia imóvel, vigiando um mundo que nunca saberia o quão perto esteve do fim. A biblioteca de Aeterna agora guardava mais um registro: a crônica do homem que se tornou montanha."
+    ]
+}
