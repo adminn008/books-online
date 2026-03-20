@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETERNA | Digital Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #080808; --card: #121212; --accent: #ffffff; --text: #a0a0a0; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; transition: 0.5s; }
+        
+        /* Layout */
+        header { padding: 60px 20px; text-align: center; border-bottom: 1px solid #1a1a1a; }
+        h1 { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 8px; margin: 0; color: var(--accent); }
+        .subtitle { color: #444; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 4px; margin-top: 10px; }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        /* Grid de Livros */
+        .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
+        .book { background: var(--card); border: 1px solid #1a1a1a; padding: 20px; border-radius: 4px; transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; }
+        .book:hover { border-color: #444; transform: translateY(-8px); }
+        .book::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent); transition: 0.5s; }
+        .book:hover::after { left: 100%; }
+
+        .cover-art { width: 100%; height: 280px; background: #000; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #1a1a1a; filter: grayscale(100%); transition: 0.5s; }
+        .book:hover .cover-art { filter: grayscale(0%); border-color: #333; }
+
+        .tag { font-size: 10px; letter-spacing: 1px; color: #555; border: 1px solid #333; padding: 2px 6px; border-radius: 2px; }
+        h3 { font-family: 'Cinzel', serif; margin: 15px 0 5px; font-size: 1.1rem; }
+        .author { font-size: 0.8rem; color: #555; }
+
+        /* Leitor (Escondido por padrão) */
+        #reader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; overflow-y: auto; padding: 40px 20px; box-sizing: border-box; }
+        .reader-content { max-width: 700px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem; color: #ccc; }
+        .close-btn { position: fixed; top: 20px; right: 20px; background: none; border: 1px solid #333; color: #fff; padding: 10px 20px; cursor: pointer; font-family: 'Cinzel'; }
+        .close-btn:hover { background: #fff; color: #000; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AETERNA</h1>
+        <div class="subtitle">Arquivos Digitais de Domínio Público & IA</div>
+    </header>
+
+    <div class="container" id="main-content">
+        <div class="shelf">
+            <div class="book" onclick="openBook('sentinela')">
+                <div class="cover-art">🌑</div>
+                <span class="tag">ORIGINAL IA</span>
+                <h3>O Sentinela de Pedra</h3>
+                <p class="author">Gerado por IA</p>
+            </div>
+
+            <div class="book" onclick="openBook('noite')">
+                <div class="cover-art">📖</div>
+                <span class="tag">DOMÍNIO PÚBLICO</span>
+                <h3>Noite na Taverna</h3>
+                <p class="author">Álvares de Azevedo</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="reader">
+        <button class="close-btn" onclick="closeBook()">FECHAR ARQUIVO</button>
+        <div class="reader-content">
+            <h1 id="read-title" style="font-size: 2rem; margin-bottom: 40px;"></h1>
+            <div id="read-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const library = {
+            'sentinela': {
+                title: 'O Sentinela de Pedra',
+                content: '<p>O vento uivava entre os três dentes de pedra no topo da montanha. Ninguém sabia quem os colocara lá, mas todos sentiam o peso de sua vigília...</p><p>[Este é um conto gerado por IA sobre sua base no Minecraft. Você pode colar o texto completo aqui.]</p>'
+            },
+            'noite': {
+                title: 'Noite na Taverna',
+                content: '<p>Era uma noite sombria. O vinho corria pelas taças enquanto os jovens contavam histórias de amores perdidos e sombras que caminham...</p><p>[Aqui você cola o texto clássico de domínio público.]</p>'
+            }
+        };
+
+        function openBook(id) {
+            const book = library[id];
+            document.getElementById('read-title').innerText = book.title;
+            document.getElementById('read-body').innerHTML = book.content;
+            document.getElementById('reader').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Trava o scroll do fundo
+        }
+
+        function closeBook() {
+            document.getElementById('reader').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+
+</body>
+</html>
