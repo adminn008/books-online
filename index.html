@@ -252,6 +252,16 @@
         t.className = "show";
         setTimeout(() => { t.className = t.className.replace("show", ""); }, 2000);
     }
+
+            function copyPix() {
+    const key = document.getElementById('pixKey').innerText;
+    navigator.clipboard.writeText(key);
+    
+    const btn = document.getElementById('pixBtn');
+    btn.innerText = "COPIADO!";
+    setTimeout(() => { btn.innerText = "COPIAR CHAVE"; }, 2000);
+}
+
 </script>
 
 
