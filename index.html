@@ -74,6 +74,28 @@
     background: #ccc;
 }
 
+        .pix-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.pix-header svg {
+    opacity: 0.8;
+}
+
+/* O resto do CSS do post anterior permanece igual */
+.apoio-container { width: 100%; max-width: 700px; margin: 60px auto; padding: 0 20px; box-sizing: border-box; }
+.apoio-box { background: #080808; border: 1px solid #1a1a1a; padding: 30px; text-align: center; border-radius: 4px; }
+.apoio-box h3 { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 5px; margin: 0; color: #fff; }
+.apoio-box p { font-size: 0.7rem; color: #444; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+.pix-wrapper { display: inline-flex; align-items: center; background: #000; border: 1px solid #222; padding: 5px 5px 5px 15px; border-radius: 4px; }
+#chavePix { font-family: 'monospace'; font-size: 0.75rem; color: #888; margin-right: 15px; }
+#btnPix { background: #fff; color: #000; border: none; padding: 10px 15px; font-size: 0.6rem; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+
+
         :root { --bg: #050505; --accent: #ffffff; --card: #0d0d0d; --sub: #555; --border: #1a1a1a; }
         body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
@@ -325,15 +347,14 @@
     navigator.clipboard.writeText(chave);
     
     const btn = document.getElementById('btnPix');
-    const originalText = btn.innerText;
     
-    btn.innerText = "COPIADO! OBRIGADO.";
-    btn.style.background = "#4dff4d"; // Fica verde rapidinho pra dar o feedback
+    btn.innerText = "✓";
+    btn.style.background = "#fff"; // Mantém branco ou mude para #4dff4d se quiser um verde neon
     
     setTimeout(() => {
-        btn.innerText = originalText;
+        btn.innerText = "COPIAR";
         btn.style.background = "#fff";
-    }, 2000);
+    }, 1500);
 }
 
 </script>
