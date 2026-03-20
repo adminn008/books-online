@@ -4,151 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETERNA | Type Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050505; --accent: #ffffff; --card: #111; --sub: #444; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', -apple-system, sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; }
+        :root { --bg: #050505; --accent: #ffffff; --card: #0d0d0d; --sub: #555; --border: #1a1a1a; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        header { text-align: center; margin-bottom: 50px; }
-        h1 { letter-spacing: 15px; font-weight: 200; text-transform: uppercase; margin: 0; font-size: 2.5rem; }
-        p { color: var(--sub); font-size: 0.65rem; letter-spacing: 4px; margin-top: 15px; }
+        header { padding: 80px 20px 40px; text-align: center; }
+        h1 { font-family: 'Cinzel', serif; letter-spacing: 18px; font-weight: 400; margin: 0; font-size: 3rem; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .tagline { color: var(--sub); font-size: 0.6rem; letter-spacing: 5px; margin-top: 20px; text-transform: uppercase; }
 
-        .input-wrapper { position: sticky; top: 20px; z-index: 100; width: 100%; max-width: 600px; margin-bottom: 50px; }
-        input { width: 100%; background: rgba(0,0,0,0.9); border: 1px solid #222; padding: 25px; color: #fff; border-radius: 8px; outline: none; font-size: 1.1rem; text-align: center; transition: 0.3s; backdrop-filter: blur(10px); }
-        input:focus { border-color: #555; box-shadow: 0 0 20px rgba(255,255,255,0.05); }
+        .container { width: 100%; max-width: 700px; padding: 0 20px; box-sizing: border-box; }
 
-        .results { width: 100%; max-width: 600px; display: grid; gap: 12px; }
-        .font-card { background: var(--card); border: 1px solid #151515; padding: 22px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
-        .font-card:hover { border-color: #333; background: #161616; transform: scale(1.01); }
-        .font-card span:first-child { font-size: 1.2rem; word-break: break-all; padding-right: 15px; }
-        .font-name { font-size: 0.55rem; color: #333; text-transform: uppercase; letter-spacing: 2px; min-width: 80px; text-align: right; }
+        /* Seção de Instruções e Atenção */
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+        .info-box { background: #0a0a0a; border: 1px solid var(--border); padding: 20px; border-radius: 4px; }
+        .info-box h4 { font-size: 0.7rem; letter-spacing: 2px; color: var(--sub); margin: 0 0 10px 0; text-transform: uppercase; }
+        .info-box p { font-size: 0.8rem; color: #888; margin: 0; line-height: 1.5; }
+        .atencao { border-left: 2px solid #ff0000; }
 
-        /* Toast de "Copiado" */
-        #toast { visibility: hidden; min-width: 200px; background-color: #fff; color: #000; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 1001; bottom: 30px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+        /* Input */
+        .input-wrapper { position: sticky; top: 0; z-index: 100; padding: 20px 0; background: var(--bg); }
+        input { width: 100%; background: #000; border: 1px solid #222; padding: 25px; color: #fff; border-radius: 4px; outline: none; font-size: 1.2rem; text-align: center; transition: 0.3s; box-sizing: border-box; }
+        input:focus { border-color: #fff; }
+
+        /* Frases Prontas */
+        .quick-phrases { margin-bottom: 30px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .phrase-btn { background: none; border: 1px solid #1a1a1a; color: #444; padding: 5px 12px; font-size: 0.7rem; cursor: pointer; border-radius: 20px; transition: 0.3s; }
+        .phrase-btn:hover { border-color: #fff; color: #fff; }
+
+        /* Gerador */
+        .results { display: grid; gap: 10px; margin-bottom: 100px; }
+        .font-card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; }
+        .font-card:hover { border-color: #444; background: #111; }
+        .font-card span:first-child { font-size: 1.3rem; word-break: break-all; }
+        .font-name { font-size: 0.5rem; color: #333; text-transform: uppercase; letter-spacing: 2px; text-align: right; min-width: 90px; }
+
+        /* Footer Profissional */
+        footer { width: 100%; background: #020202; border-top: 1px solid var(--border); padding: 60px 0; margin-top: auto; }
+        .footer-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 0 40px; }
+        .footer-section h5 { font-family: 'Cinzel'; font-size: 0.8rem; letter-spacing: 3px; margin: 0 0 20px 0; color: #fff; }
+        .footer-section a, .footer-section p { color: #444; font-size: 0.75rem; text-decoration: none; display: block; margin-bottom: 10px; transition: 0.3s; line-height: 1.6; }
+        .footer-section a:hover { color: #fff; }
+        .copyright { text-align: center; padding-top: 40px; color: #1a1a1a; font-size: 0.6rem; letter-spacing: 5px; }
+
+        /* Toast */
+        #toast { visibility: hidden; min-width: 150px; background-color: #fff; color: #000; text-align: center; border-radius: 2px; padding: 12px; position: fixed; z-index: 1001; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
         #toast.show { visibility: visible; animation: fadeInOut 2s; }
+        @keyframes fadeInOut { from {opacity: 0;} to {opacity: 1;} }
 
-        @keyframes fadeInOut { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-
-        footer { margin-top: 80px; color: #1a1a1a; font-size: 0.6rem; letter-spacing: 5px; text-align: center; line-height: 2; }
+        @media (max-width: 600px) { .info-grid, .footer-content { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <header>
         <h1>AETERNA</h1>
-        <p>30+ ESTILOS // ALTO CONTRASTE // BRASIL P/ O MUNDO</p>
+        <div class="tagline">Digital Typography // Minimalist Core</div>
     </header>
 
-    <div class="input-wrapper">
-        <input type="text" id="userInput" placeholder="INSIRA O TEXTO..." oninput="generate()" autocomplete="off">
-    </div>
-
-    <div class="results" id="output">
+    <div class="container">
+        
+        <div class="info-grid">
+            <div class="info-box">
+                <h4>Instruções</h4>
+                <p>Insira seu texto, escolha o estilo que mais combina com seu perfil e clique para copiar instantaneamente.</p>
+            </div>
+            <div class="info-box atencao">
+                <h4>Atenção</h4>
+                <p>Algumas redes sociais podem não suportar todos os caracteres. Teste antes de publicar em sua bio.</p>
+            </div>
         </div>
 
-    <div id="toast">Copiado!</div>
+        <div class="quick-phrases">
+            <button class="phrase-btn" onclick="setFast('Low Profile')">Low Profile</button>
+            <button class="phrase-btn" onclick="setFast('Offline')">Offline</button>
+            <button class="phrase-btn" onclick="setFast('Sombrio')">Sombrio</button>
+            <button class="phrase-btn" onclick="setFast('Memento Mori')">Memento Mori</button>
+            <button class="phrase-btn" onclick="setFast('Aeterna')">Aeterna</button>
+        </div>
 
-    <footer>© 2023 - 2026<br>PROJETO BRASILEIRO</footer>
+        <div class="input-wrapper">
+            <input type="text" id="userInput" placeholder="TYPE YOUR SOUL..." oninput="generate()" autocomplete="off">
+        </div>
+
+        <div class="results" id="output">
+            </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h5>Navegação</h5>
+                <a href="#">Privacidade</a>
+                <a href="#">Perguntas Frequentes (FAQ)</a>
+                <a href="fale-conosco.html">Fale Conosco</a>
+            </div>
+            <div class="footer-section">
+                <h5>FAQ</h5>
+                <p><b>É grátis?</b> Sim, para sempre.</p>
+                <p><b>Funciona no Instagram?</b> Sim, na maioria das fontes.</p>
+            </div>
+            <div class="footer-section">
+                <h5>Sobre</h5>
+                <p>Aeterna é um laboratório de estética digital focado em minimalismo e alta tecnologia tipográfica. Feito por Wellington.</p>
+            </div>
+        </div>
+        <div class="copyright">AETERNA ARCHIVE © 2023 - 2026 // PARANÁ - BRASIL</div>
+    </footer>
+
+    <div id="toast">COPIADO</div>
 
     <script>
-        const charMaps = {
-            gothic: { offset: 0x1D51E, upperOffset: 0x1D504 },
-            boldGothic: { offset: 0x1D586, upperOffset: 0x1D56C },
-            script: { offset: 0x1D4EA, upperOffset: 0x1D4D0 },
-            boldScript: { offset: 0x1D51E, upperOffset: 0x1D504 },
-            doubleStruck: { offset: 0x1D552, upperOffset: 0x1D538 },
-            monospace: { offset: 0x1D68A, upperOffset: 0x1D670 },
-            sans: { offset: 0x1D5BA, upperOffset: 0x1D5A0 },
-            boldSans: { offset: 0x1D5EE, upperOffset: 0x1D5D4 },
-            italicSans: { offset: 0x1D622, upperOffset: 0x1D608 },
-            boldItalicSans: { offset: 0x1D656, upperOffset: 0x1D63C }
-        };
+        // Use o mesmo script de geração de fontes do v2.0 que te mandei antes
+        // Apenas adicione estas duas funções extras no final:
 
-        function applyMap(text, type) {
-            return text.split('').map(char => {
-                const code = char.charCodeAt(0);
-                if (code >= 65 && code <= 90) return String.fromCodePoint(charMaps[type].upperOffset + (code - 65));
-                if (code >= 97 && code <= 122) return String.fromCodePoint(charMaps[type].offset + (code - 97));
-                return char;
-            }).join('');
+        function setFast(val) {
+            document.getElementById('userInput').value = val;
+            generate();
         }
 
-        function generate() {
-            const input = document.getElementById('userInput').value;
-            const output = document.getElementById('output');
-            output.innerHTML = '';
-            if(!input) return;
-
-            const styles = [
-                { n: 'Gothic', v: applyMap(input, 'gothic') },
-                { n: 'Bold Gothic', v: applyMap(input, 'boldGothic') },
-                { n: 'Double Struck', v: applyMap(input, 'doubleStruck') },
-                { n: 'Monospace', v: applyMap(input, 'monospace') },
-                { n: 'Script', v: applyMap(input, 'script') },
-                { n: 'Sans Serif', v: applyMap(input, 'sans') },
-                { n: 'Bold Sans', v: applyMap(input, 'boldSans') },
-                { n: 'Italic Sans', v: applyMap(input, 'italicSans') },
-                { n: 'Bold Italic', v: applyMap(input, 'boldItalicSans') },
-                { n: 'Circled', v: input.split('').map(c => {
-                    const code = c.charCodeAt(0);
-                    if(code>=65 && code<=90) return String.fromCodePoint(0x24B6 + (code-65));
-                    if(code>=97 && code<=122) return String.fromCodePoint(0x24D0 + (code-97));
-                    return c;
-                }).join('') },
-                { n: 'Parenthesis', v: input.split('').map(c => {
-                    const code = c.charCodeAt(0);
-                    if(code>=65 && code<=90) return String.fromCodePoint(0x1F110 + (code-65));
-                    if(code>=97 && code<=122) return String.fromCodePoint(0x249C + (code-97));
-                    return c;
-                }).join('') },
-                { n: 'Squares', v: input.split('').map(c => {
-                    const code = c.charCodeAt(0);
-                    if(code>=65 && code<=90) return String.fromCodePoint(0x1F130 + (code-65));
-                    if(code>=97 && code<=122) return String.fromCodePoint(0x1F130 + (code-97));
-                    return c;
-                }).join('') },
-                { n: 'Full Width', v: input.split('').map(c => {
-                    const code = c.charCodeAt(0);
-                    if(code>=33 && code<=126) return String.fromCharCode(code + 65248);
-                    return c;
-                }).join('') },
-                { n: 'Spaced', v: input.split('').join(' ') },
-                { n: 'Dots', v: input.split('').join(' · ') },
-                { n: 'Strikethrough', v: input.split('').map(c => c + '\u0336').join('') },
-                { n: 'Underline', v: input.split('').map(c => c + '\u0332').join('') },
-                { n: 'Double Under', v: input.split('').map(c => c + '\u0333').join('') },
-                { n: 'Slash', v: input.split('').map(c => c + '\u0338').join('') },
-                { n: 'Aesthetic', v: '『' + input + '』' },
-                { n: 'Japanese-ish', v: '【' + input + '】' },
-                { n: 'Broken', v: input.toUpperCase().split('').join('̸') + '̸' },
-                { n: 'Small Caps', v: input.toLowerCase().split('').map(c => {
-                    const m = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
-                    return m[c] || c;
-                }).join('') },
-                { n: 'Inverted', v: input.split('').reverse().join('') }, // Apenas invertido
-                { n: 'Vaporwave', v: input.split('').map(c => c + ' ').join('').toUpperCase() },
-                { n: 'Wavy', v: '≋ ' + input + ' ≋' },
-                { n: 'Diamond', v: '◈' + input + '◈' },
-                { n: 'Minimal Line', v: '— ' + input + ' —' },
-                { n: 'Crossthrough', v: input.split('').map(c => c + '\u0335').join('') },
-                { n: 'Shadow', v: '░' + input + '░' },
-                { n: 'Cyber', v: '[ ' + input.toUpperCase() + ' ]' }
-            ];
-
-            styles.forEach(s => {
-                const div = document.createElement('div');
-                div.className = 'font-card';
-                div.onclick = () => copyText(s.v);
-                div.innerHTML = `<span>${s.v}</span><span class="font-name">${s.n}</span>`;
-                output.appendChild(div);
-            });
-        }
-
-        function copyText(txt) {
-            navigator.clipboard.writeText(txt);
-            const t = document.getElementById("toast");
-            t.className = "show";
-            setTimeout(() => { t.className = t.className.replace("show", ""); }, 2000);
-        }
+        // [Insira aqui todo o código JavaScript do AETERNA v2.0 com os mapas de fontes]
     </script>
+
 </body>
 </html>
