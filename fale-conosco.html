@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>AETERNA | Contact Support</title>
+    <title>AETERNA | Suporte e Contato</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
         body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
@@ -24,10 +24,11 @@
 
     <div class="form-container">
         <h1>CONTATO</h1>
-        <p>Utilize o formulário abaixo para enviar mensagens, sugestões ou relatórios ao Arquivo AETERNA. Sua mensagem será armazenada em nosso banco de dados privado.</p>
+        <p>Envie suas dúvidas, sugestões ou mensagens para o arquivo AETERNA. Se desejar uma resposta, informe seu e-mail abaixo.</p>
         
         <form id="contactForm">
             <input type="text" id="nome" placeholder="SEU NOME" required>
+            <input type="email" id="email" placeholder="SEU E-MAIL (OPCIONAL)">
             <textarea id="mensagem" rows="5" placeholder="SUA MENSAGEM" required></textarea>
             <button type="submit" id="btnEnviar">ENVIAR AO ARQUIVO</button>
         </form>
@@ -36,11 +37,9 @@
     </div>
 
     <script type="module">
-        // Importando as funções necessárias do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Sua configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCtMFYHMakcPHR6HPfHK7Na54RKsCqzWPc",
             authDomain: "chat-anonimo-a9076.firebaseapp.com",
@@ -51,28 +50,27 @@
             appId: "1:1098662627081:web:80f095fab4835c23e4b5d8"
         };
 
-        // Inicializando o Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Lógica de envio
         document.getElementById('contactForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
             const btn = document.getElementById('btnEnviar');
             const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value || "Não informado";
             const mensagem = document.getElementById('mensagem').value;
 
-            // Desativa o botão para evitar cliques duplos
             btn.innerText = "ENVIANDO...";
             btn.disabled = true;
 
             push(ref(db, 'mensagens'), {
                 remetente: nome,
+                contato: email,
                 texto: mensagem,
                 timestamp: serverTimestamp()
             }).then(() => {
-                alert("Mensagem enviada com sucesso para o Arquivo!");
+                alert("Mensagem enviada com sucesso!");
                 document.getElementById('contactForm').reset();
             }).catch((error) => {
                 alert("Erro ao enviar: " + error.message);
