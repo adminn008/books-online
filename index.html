@@ -6,75 +6,148 @@
     <title>AETERNA | Type Generator</title>
     <style>
         :root { --bg: #050505; --accent: #ffffff; --card: #111; --sub: #444; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', -apple-system, sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; }
         
         header { text-align: center; margin-bottom: 50px; }
-        h1 { letter-spacing: 12px; font-weight: 300; text-transform: uppercase; margin: 0; font-size: 2rem; }
-        p { color: var(--sub); font-size: 0.7rem; letter-spacing: 3px; margin-top: 10px; }
+        h1 { letter-spacing: 15px; font-weight: 200; text-transform: uppercase; margin: 0; font-size: 2.5rem; }
+        p { color: var(--sub); font-size: 0.65rem; letter-spacing: 4px; margin-top: 15px; }
 
-        input { width: 100%; max-width: 500px; background: #000; border: 1px solid #222; padding: 20px; color: #fff; border-radius: 4px; outline: none; font-size: 1rem; text-align: center; transition: 0.3s; margin-bottom: 40px; }
-        input:focus { border-color: var(--accent); }
+        .input-wrapper { position: sticky; top: 20px; z-index: 100; width: 100%; max-width: 600px; margin-bottom: 50px; }
+        input { width: 100%; background: rgba(0,0,0,0.9); border: 1px solid #222; padding: 25px; color: #fff; border-radius: 8px; outline: none; font-size: 1.1rem; text-align: center; transition: 0.3s; backdrop-filter: blur(10px); }
+        input:focus { border-color: #555; box-shadow: 0 0 20px rgba(255,255,255,0.05); }
 
-        .results { width: 100%; max-width: 500px; display: grid; gap: 15px; }
-        .font-card { background: var(--card); border: 1px solid #1a1a1a; padding: 20px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; }
-        .font-card:hover { border-color: #444; background: #161616; }
-        .font-card span { font-size: 1.1rem; }
-        .copy-tag { font-size: 0.6rem; color: #333; text-transform: uppercase; letter-spacing: 1px; }
+        .results { width: 100%; max-width: 600px; display: grid; gap: 12px; }
+        .font-card { background: var(--card); border: 1px solid #151515; padding: 22px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
+        .font-card:hover { border-color: #333; background: #161616; transform: scale(1.01); }
+        .font-card span:first-child { font-size: 1.2rem; word-break: break-all; padding-right: 15px; }
+        .font-name { font-size: 0.55rem; color: #333; text-transform: uppercase; letter-spacing: 2px; min-width: 80px; text-align: right; }
 
-        footer { margin-top: 60px; color: #1a1a1a; font-size: 0.6rem; letter-spacing: 4px; }
+        /* Toast de "Copiado" */
+        #toast { visibility: hidden; min-width: 200px; background-color: #fff; color: #000; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 1001; bottom: 30px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+        #toast.show { visibility: visible; animation: fadeInOut 2s; }
+
+        @keyframes fadeInOut { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+
+        footer { margin-top: 80px; color: #1a1a1a; font-size: 0.6rem; letter-spacing: 5px; text-align: center; line-height: 2; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>AETERNA</h1>
-        <p>TYPE GENERATOR // LOW PROFILE</p>
+        <p>30+ STYLES // HIGH CONTRAST // PARANÁ - BR</p>
     </header>
 
-    <input type="text" id="userInput" placeholder="ESCREVA ALGO..." oninput="generate()">
+    <div class="input-wrapper">
+        <input type="text" id="userInput" placeholder="INSIRA O TEXTO..." oninput="generate()" autocomplete="off">
+    </div>
 
     <div class="results" id="output">
         </div>
 
-    <footer>ESTABLISHED 2026 // CURITIBA - PR</footer>
+    <div id="toast">Copiado</div>
+
+    <footer>ESTABLISHED 2026<br>PROJECT BY WELLINGTON</footer>
 
     <script>
-        const maps = {
-            gothic: { 'a':'𝔞','b':'𝔟','c':'𝔠','d':'𝔡','e':'𝔢','f':'𝔣','g':'𝔤','h':'𝔥','i':'𝔦','j':'𝔧','k':'𝔨','l':'𝔩','m':'𝔪','n':'𝔫','o':'𝔬','p':'𝔭','q':'𝔮','r':'𝔯','s':'𝔰','t':'𝔱','u':'𝔲','v':'𝔳','w':'𝔴','x':'𝔵','y':'𝔶','z':'𝔷' },
-            spaced: { 'a':'ａ','b':'ｂ','c':'ｃ','d':'ｄ','e':'ｅ','f':'ｆ','g':'ｇ','h':'ｈ','i':'ｉ','j':'ｊ','k':'ｋ','l':'ｌ','m':'ｍ','n':'ｎ','o':'ｏ','p':'ｐ','q':'ｑ','r':'ｒ','s':'ｓ','t':'ｔ','u':'ｕ','v':'ｖ','w':'ｗ','x':'ｘ','y':'ｙ','z':'ｚ' },
-            small: { 'a':'ᵃ','b':'ᵇ','c':'ᶜ','d':'ᵈ','e':'ᵉ','f':'ᶠ','g':'ᵍ','h':'ʰ','i':'ⁱ','j':'ʲ','k':'ᵏ','l':'ˡ','m':'ᵐ','n':'ⁿ','o':'ᵒ','p':'ᵖ','q':'ᵠ','r':'ʳ','s':'ˢ','t':'ᵗ','u':'ᵘ','v':'ᵛ','w':'ʷ','x':'ˣ','y':'ʸ','z':'ᶻ' }
+        const charMaps = {
+            gothic: { offset: 0x1D51E, upperOffset: 0x1D504 },
+            boldGothic: { offset: 0x1D586, upperOffset: 0x1D56C },
+            script: { offset: 0x1D4EA, upperOffset: 0x1D4D0 },
+            boldScript: { offset: 0x1D51E, upperOffset: 0x1D504 },
+            doubleStruck: { offset: 0x1D552, upperOffset: 0x1D538 },
+            monospace: { offset: 0x1D68A, upperOffset: 0x1D670 },
+            sans: { offset: 0x1D5BA, upperOffset: 0x1D5A0 },
+            boldSans: { offset: 0x1D5EE, upperOffset: 0x1D5D4 },
+            italicSans: { offset: 0x1D622, upperOffset: 0x1D608 },
+            boldItalicSans: { offset: 0x1D656, upperOffset: 0x1D63C }
         };
 
-        function convert(text, map) {
-            return text.toLowerCase().split('').map(char => map[char] || char).join('');
+        function applyMap(text, type) {
+            return text.split('').map(char => {
+                const code = char.charCodeAt(0);
+                if (code >= 65 && code <= 90) return String.fromCodePoint(charMaps[type].upperOffset + (code - 65));
+                if (code >= 97 && code <= 122) return String.fromCodePoint(charMaps[type].offset + (code - 97));
+                return char;
+            }).join('');
         }
 
         function generate() {
             const input = document.getElementById('userInput').value;
             const output = document.getElementById('output');
             output.innerHTML = '';
-
             if(!input) return;
 
             const styles = [
-                { name: 'GOTHIC', val: convert(input, maps.gothic) },
-                { name: 'SPACED', val: convert(input, maps.spaced) },
-                { name: 'SMALL CAPS', val: convert(input, maps.small) },
-                { name: 'MINIMAL', val: input.split('').join(' · ') }
+                { n: 'Gothic', v: applyMap(input, 'gothic') },
+                { n: 'Bold Gothic', v: applyMap(input, 'boldGothic') },
+                { n: 'Double Struck', v: applyMap(input, 'doubleStruck') },
+                { n: 'Monospace', v: applyMap(input, 'monospace') },
+                { n: 'Script', v: applyMap(input, 'script') },
+                { n: 'Sans Serif', v: applyMap(input, 'sans') },
+                { n: 'Bold Sans', v: applyMap(input, 'boldSans') },
+                { n: 'Italic Sans', v: applyMap(input, 'italicSans') },
+                { n: 'Bold Italic', v: applyMap(input, 'boldItalicSans') },
+                { n: 'Circled', v: input.split('').map(c => {
+                    const code = c.charCodeAt(0);
+                    if(code>=65 && code<=90) return String.fromCodePoint(0x24B6 + (code-65));
+                    if(code>=97 && code<=122) return String.fromCodePoint(0x24D0 + (code-97));
+                    return c;
+                }).join('') },
+                { n: 'Parenthesis', v: input.split('').map(c => {
+                    const code = c.charCodeAt(0);
+                    if(code>=65 && code<=90) return String.fromCodePoint(0x1F110 + (code-65));
+                    if(code>=97 && code<=122) return String.fromCodePoint(0x249C + (code-97));
+                    return c;
+                }).join('') },
+                { n: 'Squares', v: input.split('').map(c => {
+                    const code = c.charCodeAt(0);
+                    if(code>=65 && code<=90) return String.fromCodePoint(0x1F130 + (code-65));
+                    if(code>=97 && code<=122) return String.fromCodePoint(0x1F130 + (code-97));
+                    return c;
+                }).join('') },
+                { n: 'Full Width', v: input.split('').map(c => {
+                    const code = c.charCodeAt(0);
+                    if(code>=33 && code<=126) return String.fromCharCode(code + 65248);
+                    return c;
+                }).join('') },
+                { n: 'Spaced', v: input.split('').join(' ') },
+                { n: 'Dots', v: input.split('').join(' · ') },
+                { n: 'Strikethrough', v: input.split('').map(c => c + '\u0336').join('') },
+                { n: 'Underline', v: input.split('').map(c => c + '\u0332').join('') },
+                { n: 'Double Under', v: input.split('').map(c => c + '\u0333').join('') },
+                { n: 'Slash', v: input.split('').map(c => c + '\u0338').join('') },
+                { n: 'Aesthetic', v: '『' + input + '』' },
+                { n: 'Japanese-ish', v: '【' + input + '】' },
+                { n: 'Broken', v: input.toUpperCase().split('').join('̸') + '̸' },
+                { n: 'Small Caps', v: input.toLowerCase().split('').map(c => {
+                    const m = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
+                    return m[c] || c;
+                }).join('') },
+                { n: 'Inverted', v: input.split('').reverse().join('') }, // Apenas invertido
+                { n: 'Vaporwave', v: input.split('').map(c => c + ' ').join('').toUpperCase() },
+                { n: 'Wavy', v: '≋ ' + input + ' ≋' },
+                { n: 'Diamond', v: '◈' + input + '◈' },
+                { n: 'Minimal Line', v: '— ' + input + ' —' },
+                { n: 'Crossthrough', v: input.split('').map(c => c + '\u0335').join('') },
+                { n: 'Shadow', v: '░' + input + '░' },
+                { n: 'Cyber', v: '[ ' + input.toUpperCase() + ' ]' }
             ];
 
             styles.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'font-card';
-                div.onclick = () => copyText(s.val);
-                div.innerHTML = `<span>${s.val}</span><span class="copy-tag">Click to Copy</span>`;
+                div.onclick = () => copyText(s.v);
+                div.innerHTML = `<span>${s.v}</span><span class="font-name">${s.n}</span>`;
                 output.appendChild(div);
             });
         }
 
         function copyText(txt) {
             navigator.clipboard.writeText(txt);
-            alert("Copiado: " + txt);
+            const t = document.getElementById("toast");
+            t.className = "show";
+            setTimeout(() => { t.className = t.className.replace("show", ""); }, 2000);
         }
     </script>
 </body>
