@@ -37,7 +37,7 @@
 
 ## 👨‍💻 Desenvolvedor
 
-Projeto idealizado e desenvolvido por **Wellington**.  
+Projeto idealizado e desenvolvido por **Welington**.  
 📍 Paraná, Brasil.
 
 ---
