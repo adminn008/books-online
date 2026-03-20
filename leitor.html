@@ -30,35 +30,52 @@
     <button onclick="proximo()">PRÓXIMA</button>
 </div>
 
-<script src="livros.js"></script>
-<script>
-    const livroId = localStorage.getItem('livro_atual');
-    const livro = biblioteca[livroId];
-    let paginaAtual = 0;
+<script type="module">
+    // 1. Pega o ID do livro que você salvou no LocalStorage ao clicar na index
+    const livroId = localStorage.getItem('livro_atual'); 
+    let currentBook = null;
+    let currentPage = 0;
+
+    async function carregarLivro() {
+        try {
+            // 2. A MÁGICA: Ele importa apenas o arquivo do livro clicado
+            const modulo = await import(`./livros/${livroId}.js`);
+            currentBook = modulo.dados;
+            renderizar();
+        } catch (err) {
+            console.error("Erro ao carregar o livro:", err);
+            alert("Arquivo do livro não encontrado!");
+        }
+    }
 
     function renderizar() {
-        document.getElementById('titulo-livro').innerText = livro.titulo;
-        document.getElementById('conteudo').innerHTML = `<p>${livro.paginas[paginaAtual]}</p>`;
-        document.getElementById('num-pagina').innerText = `PÁGINA ${paginaAtual + 1} DE ${livro.paginas.length}`;
-        window.scrollTo(0,0);
+        const body = document.getElementById('read-body');
+        document.getElementById('read-title').innerText = currentBook.title;
+        
+        body.style.opacity = 0;
+        setTimeout(() => {
+            body.innerHTML = `<p>${currentBook.pages[currentPage]}</p>`;
+            body.style.opacity = 1;
+            document.querySelector('.reader-content').scrollTop = 0;
+        }, 200);
+
+        document.getElementById('page-info').innerText = `PÁGINA ${currentPage + 1} DE ${currentBook.pages.length}`;
+        document.getElementById('prevBtn').disabled = (currentPage === 0);
+        document.getElementById('nextBtn').disabled = (currentPage === currentBook.pages.length - 1);
     }
 
-    function proximo() {
-        if (paginaAtual < livro.paginas.length - 1) {
-            paginaAtual++;
-            renderizar();
-        }
-    }
+    // Funções globais para os botões funcionarem com type="module"
+    window.changePage = (direction) => {
+        currentPage += direction;
+        renderizar();
+    };
 
-    function voltar() {
-        if (paginaAtual > 0) {
-            paginaAtual--;
-            renderizar();
-        }
-    }
+    window.closeBook = () => {
+        window.location.href = 'index.html';
+    };
 
-    if(livro) renderizar();
-    else window.location.href = 'index.html';
+    if (livroId) carregarLivro();
 </script>
+
 </body>
 </html>
