@@ -3,124 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETERNA | Digital Archive</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>AETERNA | Type Generator</title>
     <style>
-        :root { --bg: #080808; --card: #121212; --accent: #ffffff; --text: #a0a0a0; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; transition: 0.5s; overflow-x: hidden; }
+        :root { --bg: #050505; --accent: #ffffff; --card: #111; --sub: #444; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
         
-        header { padding: 60px 20px; text-align: center; border-bottom: 1px solid #1a1a1a; }
-        h1 { font-family: 'Cinzel', serif; font-size: 3rem; letter-spacing: 8px; margin: 0; color: var(--accent); }
-        .subtitle { color: #444; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 4px; margin-top: 10px; }
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { letter-spacing: 12px; font-weight: 300; text-transform: uppercase; margin: 0; font-size: 2rem; }
+        p { color: var(--sub); font-size: 0.7rem; letter-spacing: 3px; margin-top: 10px; }
 
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        
-        .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
-        .book { background: var(--card); border: 1px solid #1a1a1a; padding: 20px; border-radius: 4px; transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; }
-        .book:hover { border-color: #444; transform: translateY(-8px); }
+        input { width: 100%; max-width: 500px; background: #000; border: 1px solid #222; padding: 20px; color: #fff; border-radius: 4px; outline: none; font-size: 1rem; text-align: center; transition: 0.3s; margin-bottom: 40px; }
+        input:focus { border-color: var(--accent); }
 
-        .cover-art { width: 100%; height: 280px; background: #000; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #1a1a1a; filter: grayscale(100%); transition: 0.5s; font-size: 3rem; }
-        .book:hover .cover-art { filter: grayscale(0%); border-color: #333; }
+        .results { width: 100%; max-width: 500px; display: grid; gap: 15px; }
+        .font-card { background: var(--card); border: 1px solid #1a1a1a; padding: 20px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; }
+        .font-card:hover { border-color: #444; background: #161616; }
+        .font-card span { font-size: 1.1rem; }
+        .copy-tag { font-size: 0.6rem; color: #333; text-transform: uppercase; letter-spacing: 1px; }
 
-        .tag { font-size: 10px; letter-spacing: 1px; color: #555; border: 1px solid #333; padding: 2px 6px; border-radius: 2px; }
-        h3 { font-family: 'Cinzel', serif; margin: 15px 0 5px; font-size: 1.1rem; }
-        .author { font-size: 0.8rem; color: #555; }
-
-        /* Leitor */
-        #reader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; padding: 40px 20px; box-sizing: border-box; }
-        .reader-content { max-width: 700px; margin: 0 auto; line-height: 1.8; font-size: 1.2rem; color: #ccc; height: 70vh; overflow-y: auto; padding-right: 10px; animation: fadeIn 0.4s; }
-        
-        .reader-footer { max-width: 700px; margin: 20px auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 20px; }
-        
-        .btn-nav { background: none; border: 1px solid #333; color: #fff; padding: 10px 20px; cursor: pointer; font-family: 'Cinzel'; transition: 0.3s; }
-        .btn-nav:hover { background: #fff; color: #000; }
-        .btn-nav:disabled { opacity: 0.2; cursor: default; }
-
-        .close-btn { position: fixed; top: 20px; right: 20px; z-index: 1001; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        footer { margin-top: 60px; color: #1a1a1a; font-size: 0.6rem; letter-spacing: 4px; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>AETERNA</h1>
-        <div class="subtitle">Arquivos Digitais de Domínio Público & IA</div>
+        <p>TYPE GENERATOR // LOW PROFILE</p>
     </header>
 
-    <div class="container" id="main-content">
-        <div class="shelf">
-            <div class="book" onclick="openBook('sentinela')">
-                <div class="cover-art">🌑</div>
-                <span class="tag">ORIGINAL IA</span>
-                <h3>O Sentinela de Pedra</h3>
-                <p class="author">Gerado por IA</p>
-            </div>
+    <input type="text" id="userInput" placeholder="ESCREVA ALGO..." oninput="generate()">
 
-            <div class="book" onclick="openBook('noite')">
-                <div class="cover-art">📖</div>
-                <span class="tag">DOMÍNIO PÚBLICO</span>
-                <h3>Noite na Taverna</h3>
-                <p class="author">Álvares de Azevedo</p>
-            </div>
+    <div class="results" id="output">
         </div>
-    </div>
 
-    <div id="reader">
-        <button class="btn-nav close-btn" onclick="closeBook()">FECHAR</button>
-        <div class="reader-content">
-            <h1 id="read-title" style="font-family: 'Cinzel'; font-size: 1.5rem; margin-bottom: 30px; color: #fff;"></h1>
-            <div id="read-body"></div>
-        </div>
-        
-        <div class="reader-footer">
-            <button id="prevBtn" class="btn-nav" onclick="changePage(-1)">ANTERIOR</button>
-            <span id="page-info" style="font-size: 0.8rem; color: #444;"></span>
-            <button id="nextBtn" class="btn-nav" onclick="changePage(1)">PRÓXIMA</button>
-        </div>
-    </div>
+    <footer>ESTABLISHED 2026 // CURITIBA - PR</footer>
 
-    <script src="livros.js"></script>
     <script>
-        let currentBook = null;
-        let currentPage = 0;
+        const maps = {
+            gothic: { 'a':'𝔞','b':'𝔟','c':'𝔠','d':'𝔡','e':'𝔢','f':'𝔣','g':'𝔤','h':'𝔥','i':'𝔦','j':'𝔧','k':'𝔨','l':'𝔩','m':'𝔪','n':'𝔫','o':'𝔬','p':'𝔭','q':'𝔮','r':'𝔯','s':'𝔰','t':'𝔱','u':'𝔲','v':'𝔳','w':'𝔴','x':'𝔵','y':'𝔶','z':'𝔷' },
+            spaced: { 'a':'ａ','b':'ｂ','c':'ｃ','d':'ｄ','e':'ｅ','f':'ｆ','g':'ｇ','h':'ｈ','i':'ｉ','j':'ｊ','k':'ｋ','l':'ｌ','m':'ｍ','n':'ｎ','o':'ｏ','p':'ｐ','q':'ｑ','r':'ｒ','s':'ｓ','t':'ｔ','u':'ｕ','v':'ｖ','w':'ｗ','x':'ｘ','y':'ｙ','z':'ｚ' },
+            small: { 'a':'ᵃ','b':'ᵇ','c':'ᶜ','d':'ᵈ','e':'ᵉ','f':'ᶠ','g':'ᵍ','h':'ʰ','i':'ⁱ','j':'ʲ','k':'ᵏ','l':'ˡ','m':'ᵐ','n':'ⁿ','o':'ᵒ','p':'ᵖ','q':'ᵠ','r':'ʳ','s':'ˢ','t':'ᵗ','u':'ᵘ','v':'ᵛ','w':'ʷ','x':'ˣ','y':'ʸ','z':'ᶻ' }
+        };
 
-        function openBook(id) {
-            currentBook = biblioteca[id];
-            currentPage = 0;
-            updateReader();
-            document.getElementById('reader').style.display = 'block';
-            document.body.style.overflow = 'hidden';
+        function convert(text, map) {
+            return text.toLowerCase().split('').map(char => map[char] || char).join('');
         }
 
-        function updateReader() {
-            const body = document.getElementById('read-body');
-            document.getElementById('read-title').innerText = currentBook.title;
-            
-            // Efeito de transição suave
-            body.style.opacity = 0;
-            setTimeout(() => {
-                body.innerHTML = `<p>${currentBook.pages[currentPage]}</p>`;
-                body.style.opacity = 1;
-                document.querySelector('.reader-content').scrollTop = 0;
-            }, 200);
+        function generate() {
+            const input = document.getElementById('userInput').value;
+            const output = document.getElementById('output');
+            output.innerHTML = '';
 
-            document.getElementById('page-info').innerText = `PÁGINA ${currentPage + 1} DE ${currentBook.pages.length}`;
-            
-            document.getElementById('prevBtn').disabled = (currentPage === 0);
-            document.getElementById('nextBtn').disabled = (currentPage === currentBook.pages.length - 1);
+            if(!input) return;
+
+            const styles = [
+                { name: 'GOTHIC', val: convert(input, maps.gothic) },
+                { name: 'SPACED', val: convert(input, maps.spaced) },
+                { name: 'SMALL CAPS', val: convert(input, maps.small) },
+                { name: 'MINIMAL', val: input.split('').join(' · ') }
+            ];
+
+            styles.forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'font-card';
+                div.onclick = () => copyText(s.val);
+                div.innerHTML = `<span>${s.val}</span><span class="copy-tag">Click to Copy</span>`;
+                output.appendChild(div);
+            });
         }
 
-        function changePage(direction) {
-            currentPage += direction;
-            updateReader();
-        }
-
-        function closeBook() {
-            document.getElementById('reader').style.display = 'none';
-            document.body.style.overflow = 'auto';
+        function copyText(txt) {
+            navigator.clipboard.writeText(txt);
+            alert("Copiado: " + txt);
         }
     </script>
-
 </body>
 </html>
