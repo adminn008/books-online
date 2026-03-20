@@ -2,33 +2,54 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>AETERNA | Central de Comando</title>
+    <title>AETERNA | Painel de Controle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
-        .login-box { max-width: 300px; margin: 100px auto; text-align: center; }
-        input { background: #000; border: 1px solid #222; padding: 15px; color: #fff; width: 100%; margin-bottom: 10px; }
-        .msg-card { background: #0d0d0d; border: 1px solid #1a1a1a; padding: 20px; margin-bottom: 15px; border-radius: 4px; }
-        .msg-card h4 { margin: 0 0 10px 0; color: #555; font-size: 0.8rem; }
-        .msg-card p { margin: 0; line-height: 1.6; }
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; margin: 0; }
+        .login-box { max-width: 350px; margin: 100px auto; text-align: center; border: 1px solid #1a1a1a; padding: 40px; background: #080808; }
+        h2 { font-family: 'Cinzel'; letter-spacing: 5px; font-size: 1.2rem; margin-bottom: 25px; }
+        
+        input { background: #000; border: 1px solid #222; padding: 15px; color: #fff; width: 100%; margin-bottom: 15px; outline: none; box-sizing: border-box; }
+        input:focus { border-color: #fff; }
+        
+        button { width: 100%; padding: 15px; background: #fff; color: #000; border: none; font-weight: bold; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; }
+        
         #painel { display: none; max-width: 800px; margin: 0 auto; }
+        .header-painel { border-bottom: 1px solid #1a1a1a; padding-bottom: 20px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; }
+
+        .msg-card { background: #0d0d0d; border: 1px solid #1a1a1a; padding: 25px; margin-bottom: 20px; border-radius: 4px; position: relative; transition: 0.3s; }
+        .msg-card:hover { border-color: #333; }
+        
+        .status-badge { font-size: 0.6rem; letter-spacing: 2px; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px; display: inline-block; cursor: pointer; }
+        .nao-lida { background: #420000; color: #ff4d4d; border: 1px solid #ff4d4d; }
+        .lida { background: #002b00; color: #4dff4d; border: 1px solid #4dff4d; }
+
+        .info-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .remetente { font-family: 'Cinzel'; font-size: 0.9rem; letter-spacing: 2px; color: #fff; margin: 0; }
+        .contato { font-size: 0.75rem; color: #555; margin: 5px 0; }
+        .horario { font-size: 0.65rem; color: #333; letter-spacing: 1px; }
+        .texto { font-size: 0.9rem; line-height: 1.6; color: #ccc; margin-top: 15px; white-space: pre-wrap; }
     </style>
 </head>
 <body>
 
     <div id="login" class="login-box">
-        <h2 style="font-family: 'Cinzel'; letter-spacing: 5px;">ACESSO PRIVADO</h2>
+        <h2>ACESSO PRIVADO</h2>
         <input type="password" id="pass" placeholder="SENHA DO ARQUIVO">
-        <button onclick="checkPass()" style="width: 100%; padding: 10px; cursor:pointer;">ENTRAR</button>
+        <button onclick="verificarSenha()">DESBLOQUEAR</button>
     </div>
 
     <div id="painel">
-        <h1 style="font-family: 'Cinzel'; letter-spacing: 10px;">MENSAGENS RECEBIDAS</h1>
-        <div id="lista-mensagens">Carregando...</div>
+        <div class="header-painel">
+            <h1 style="font-family: 'Cinzel'; letter-spacing: 8px; margin: 0; font-size: 1.5rem;">ARQUIVO DE MENSAGENS</h1>
+            <button onclick="location.reload()" style="width: auto; padding: 8px 15px; font-size: 0.6rem;">ATUALIZAR</button>
+        </div>
+        <div id="lista-mensagens">Carregando mensagens...</div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCtMFYHMakcPHR6HPfHK7Na54RKsCqzWPc",
@@ -39,36 +60,65 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        window.checkPass = function() {
+        // Função de Login
+        window.verificarSenha = function() {
             const pass = document.getElementById('pass').value;
-            if(pass === "Aeterna2026") { // <--- MUDE SUA SENHA AQUI
+            if(pass === "Aeterna2026") { // Sua senha
                 document.getElementById('login').style.display = 'none';
                 document.getElementById('painel').style.display = 'block';
-                carregarMensagens();
+                buscarMensagens();
             } else {
-                alert("Senha incorreta.");
+                alert("Acesso negado.");
             }
         }
 
-        function carregarMensagens() {
+        // Função para alternar entre Lida e Não Lida
+        window.alternarStatus = function(id, statusAtual) {
+            const novoStatus = !statusAtual;
+            update(ref(db, 'mensagens/' + id), {
+                lida: novoStatus
+            });
+        }
+
+        function buscarMensagens() {
             const msgRef = ref(db, 'mensagens');
             onValue(msgRef, (snapshot) => {
                 const data = snapshot.val();
-                const lista = document.getElementById('lista-mensagens');
-                lista.innerHTML = '';
+                const container = document.getElementById('lista-mensagens');
+                container.innerHTML = '';
                 
                 if (data) {
-                    Object.keys(data).reverse().forEach(key => {
+                    // Converter para array e inverter para ver as mais recentes primeiro
+                    const keys = Object.keys(data).reverse();
+                    
+                    keys.forEach(key => {
                         const m = data[key];
-                        lista.innerHTML += `
+                        const foiLida = m.lida || false;
+                        
+                        // Formatar a data
+                        const dataMsg = m.timestamp ? new Date(m.timestamp).toLocaleString('pt-BR') : "Data desconhecida";
+
+                        container.innerHTML += `
                             <div class="msg-card">
-                                <h4>DE: ${m.remetente.toUpperCase()}</h4>
-                                <p>${m.texto}</p>
+                                <div class="info-header">
+                                    <div>
+                                        <p class="remetente">${m.remetente.toUpperCase()}</p>
+                                        <p class="contato">CONTATO: ${m.contato}</p>
+                                    </div>
+                                    <div class="horario">${dataMsg}</div>
+                                </div>
+                                
+                                <div onclick="alternarStatus('${key}', ${foiLida})" 
+                                     class="status-badge ${foiLida ? 'lida' : 'nao-lida'}">
+                                    ${foiLida ? '● Lida' : '○ Não Lida'}
+                                </div>
+
+                                <p class="texto">${m.texto}</p>
                             </div>
                         `;
                     });
                 } else {
-                    lista.innerHTML = '<p style="color: #333;">Nenhuma mensagem no arquivo.</p>';
+                    container.innerHTML = '<p style="color: #333; text-align: center;">O arquivo está vazio.</p>';
                 }
             });
         }
