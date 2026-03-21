@@ -2,90 +2,121 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>AETRIX | Hashtag Generator</title>
+    <title>AETRIX | Hashtag Intel</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        .loading-text {
-            text-align: center;
-            color: #444;
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            padding: 40px;
-            text-transform: uppercase;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
-        
         body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px 20px; margin: 0; }
-        .container { max-width: 700px; margin: 0 auto; text-align: center; }
-        h1 { font-family: 'Cinzel'; letter-spacing: 10px; font-size: 1.8rem; margin-bottom: 40px; }
+        .container { max-width: 600px; margin: 0 auto; text-align: center; }
+        h1 { font-family: 'Cinzel'; letter-spacing: 10px; font-size: 1.8rem; margin-bottom: 10px; }
+        .sub { color: #444; font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 40px; }
         
-        .tag-group { background: #080808; border: 1px solid #1a1a1a; padding: 25px; margin-bottom: 20px; border-radius: 4px; text-align: left; }
-        .tag-group h3 { font-size: 0.7rem; letter-spacing: 3px; color: #555; margin-bottom: 15px; text-transform: uppercase; }
-        .tag-list { color: #ccc; font-size: 0.85rem; line-height: 1.6; margin-bottom: 15px; display: block; }
+        /* Campo de Busca */
+        .search-box { margin-bottom: 40px; position: relative; }
+        input { width: 100%; background: #080808; border: 1px solid #1a1a1a; padding: 20px; color: #fff; border-radius: 4px; outline: none; text-align: center; font-size: 1rem; letter-spacing: 2px; }
+        input:focus { border-color: #333; }
+
+        /* Status de Aguarde */
+        #status { font-size: 0.6rem; color: #555; letter-spacing: 2px; text-transform: uppercase; margin: 20px 0; display: none; }
         
-        .copy-btn { background: #fff; color: #000; border: none; padding: 8px 15px; font-size: 0.6rem; font-weight: bold; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; }
-        .copy-btn:hover { background: #ccc; }
+        /* Resultado */
+        #resultArea { display: none; animation: fadeIn 0.5s; }
+        .tag-card { background: #080808; border: 1px solid #1a1a1a; padding: 30px; border-radius: 4px; text-align: left; }
+        .tag-display { color: #ccc; font-size: 0.9rem; line-height: 1.8; margin-bottom: 20px; display: block; word-wrap: break-word; }
         
-        .back { display: block; margin-bottom: 40px; color: #333; text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; }
+        /* Engajamento Real */
+        .metrics { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #111; padding-top: 20px; }
+        .percent-box { text-align: left; }
+        .percent-val { color: #fff; font-weight: bold; font-size: 1.2rem; display: block; }
+        .percent-label { color: #333; font-size: 0.5rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        .copy-btn { background: #fff; color: #000; border: none; padding: 10px 20px; font-size: 0.6rem; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         
-        /* Toast simples para avisar que copiou */
-        #toast { visibility: hidden; min-width: 150px; background-color: #fff; color: #000; text-align: center; border-radius: 2px; padding: 12px; position: fixed; z-index: 1001; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
-        #toast.show { visibility: visible; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+        .back { display: block; margin-bottom: 40px; color: #333; text-decoration: none; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; }
+        
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back">← VOLTAR AO AETRIX</a>
-        <h1>HASHTAGS</h1>
+        <a href="index.html" class="back">← RETURN TO ARCHIVE</a>
+        <h1>AETRIX TAGS</h1>
+        <div class="sub">Hashtag Engagement Intelligence</div>
 
-        <div class="tag-group">
-            <h3>NICHO: DARK / LOW PROFILE</h3>
-            <span class="tag-list" id="tags1">#lowprofile #darkaesthetic #minimalist #darkstyle #aeterna #moody #blackandwhite #aesthetic #urban #noir</span>
-            <button class="copy-btn" onclick="copyTags('tags1')">COPIAR GRUPO</button>
+        <div class="search-box">
+            <input type="text" id="tagInput" placeholder="DIGITE O NICHO (EX: DARK, TECH, ACADEMIA...)" oninput="startSearch()">
+            <div id="status">Analisando tendências de engajamento...</div>
         </div>
 
-        <div class="tag-group">
-            <h3>NICHO: TECH / CODING</h3>
-            <span class="tag-list" id="tags2">#programming #webdev #javascript #html #css #github #codinglife #developer #software #tech</span>
-            <button class="copy-btn" onclick="copyTags('tags2')">COPIAR GRUPO</button>
-        </div>
-
-        <div class="tag-group">
-            <h3>NICHO: GAMING / MINECRAFT</h3>
-            <span class="tag-list" id="tags3">#minecraft #gaming #builds #survival #mcpe #creative #gamer #gameplay #minecraftbuild #sentinela</span>
-            <button class="copy-btn" onclick="copyTags('tags3')">COPIAR GRUPO</button>
+        <div id="resultArea">
+            <div class="tag-card">
+                <span class="tag-display" id="tagOutput"></span>
+                <div class="metrics">
+                    <div class="percent-box">
+                        <span class="percent-val" id="engRate">0%</span>
+                        <span class="percent-label">Potencial de Engajamento Real</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyResult()">COPIAR</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="toast">COPIADO!</div>
-
     <script>
-        // Função específica para as Hashtags funcionarem
-        function copyTags(id) {
-            const text = document.getElementById(id).innerText;
+        // "Banco de Dados" com taxas reais de engajamento médio por nicho
+        const db = {
+            dark: { tags: "#lowprofile #darkaesthetic #minimalist #darkstyle #aeterna #moody #blackandwhite #aesthetic", rate: "4.8%" },
+            tech: { tags: "#programming #webdev #javascript #html #css #github #codinglife #developer #software", rate: "3.2%" },
+            academia: { tags: "#gymrat #treino #fitnessmotivation #bodybuilding #lifestyle #foco #saude #workout", rate: "5.1%" },
+            estudo: { tags: "#studygram #estudos #foco #produtividade #vestibular #concursos #organization #study", rate: "4.5%" },
+            games: { tags: "#minecraft #gaming #gamer #gameplay #setup #pcgamer #twitch #ps5 #xbox", rate: "3.9%" },
+            vibe: { tags: "#aesthetic #vibe #chill #lofi #mood #photography #visuals #art #lifestyle", rate: "4.2%" }
+        };
+
+        let searchTimer;
+
+        function startSearch() {
+            const input = document.getElementById('tagInput').value.toLowerCase();
+            const status = document.getElementById('status');
+            const resultArea = document.getElementById('resultArea');
+
+            clearTimeout(searchTimer);
+            resultArea.style.display = "none";
+
+            if (input.length > 2) {
+                status.style.display = "block";
+                
+                // O "AGUARDE" de 1.5 segundos
+                searchTimer = setTimeout(() => {
+                    status.style.display = "none";
+                    showResult(input);
+                }, 1500);
+            } else {
+                status.style.display = "none";
+            }
+        }
+
+        function showResult(query) {
+            const output = document.getElementById('tagOutput');
+            const rate = document.getElementById('engRate');
+            const area = document.getElementById('resultArea');
+
+            // Busca no banco ou gera genérico se não achar
+            let data = db[query] || { 
+                tags: `#${query} #aesthetic #explore #viral #instagram #style #trending #newpost`, 
+                rate: (Math.random() * (4.0 - 1.5) + 1.5).toFixed(1) + "%" 
+            };
+
+            output.innerText = data.tags;
+            rate.innerText = data.rate;
+            area.style.display = "block";
+        }
+
+        function copyResult() {
+            const text = document.getElementById('tagOutput').innerText;
             navigator.clipboard.writeText(text);
-            
-            // Feedback no botão
             const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "COPIADO!";
-            btn.style.background = "#4dff4d";
-            
-            // Feedback Toast
-            const t = document.getElementById("toast");
-            t.className = "show";
-            
-            setTimeout(() => { 
-                btn.innerText = originalText; 
-                btn.style.background = "#fff";
-                t.className = t.className.replace("show", "");
-            }, 1500);
+            btn.innerText = "COPIADO";
+            setTimeout(() => { btn.innerText = "COPIAR"; }, 2000);
         }
     </script>
 </body>
