@@ -1,12 +1,12 @@
-# 🌑 AETERNA | Digital Typography Archive
+# 🌑 AetrixText | Digital Typography Archive
 
 ![Status](https://img.shields.io/badge/Status-Online-brightgreen?style=flat-square)
 ![Tech](https://img.shields.io/badge/Tech-HTML5%20%7C%20CSS3%20%7C%20JS-black?style=flat-square)
 ![Firebase](https://img.shields.io/badge/Database-Firebase-orange?style=flat-square)
 
-**AETERNA** é um gerador de tipografia minimalista e estética *low profile* desenvolvido para criadores de conteúdo que buscam personalizar suas biografias e presenças digitais com elegância e mistério.
+**AETRIX** é um gerador de tipografia minimalista e estética *low profile* desenvolvido para criadores de conteúdo que buscam personalizar suas biografias e presenças digitais com elegância e mistério.
 
-🔗 **Acesse o projeto:** [https://adminn008.github.io/aeterna-bios/](https://adminn008.github.io/aeterna-bios/index.html)
+🔗 **Acesse o projeto:** [https://adminn008.github.io/aetrix-text/](https://adminn008.github.io/aetrix-text/index.html)
 
 ---
 
