@@ -5,20 +5,20 @@
     <title>AETRIX | Hashtag Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
-.loading-text {
-    text-align: center;
-    color: #444;
-    font-size: 0.7rem;
-    letter-spacing: 4px;
-    padding: 40px;
-    text-transform: uppercase;
-    animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-    0% { opacity: 0.3; }
-    50% { opacity: 1; }
-    100% { opacity: 0.3; }
-}
+        .loading-text {
+            text-align: center;
+            color: #444;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            padding: 40px;
+            text-transform: uppercase;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
         
         body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px 20px; margin: 0; }
         .container { max-width: 700px; margin: 0 auto; text-align: center; }
@@ -28,10 +28,15 @@
         .tag-group h3 { font-size: 0.7rem; letter-spacing: 3px; color: #555; margin-bottom: 15px; text-transform: uppercase; }
         .tag-list { color: #ccc; font-size: 0.85rem; line-height: 1.6; margin-bottom: 15px; display: block; }
         
-        .copy-btn { background: #fff; color: #000; border: none; padding: 8px 15px; font-size: 0.6rem; font-weight: bold; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; }
+        .copy-btn { background: #fff; color: #000; border: none; padding: 8px 15px; font-size: 0.6rem; font-weight: bold; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; }
         .copy-btn:hover { background: #ccc; }
         
         .back { display: block; margin-bottom: 40px; color: #333; text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; }
+        
+        /* Toast simples para avisar que copiou */
+        #toast { visibility: hidden; min-width: 150px; background-color: #fff; color: #000; text-align: center; border-radius: 2px; padding: 12px; position: fixed; z-index: 1001; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
+        #toast.show { visibility: visible; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
     </style>
 </head>
 <body>
@@ -58,124 +63,30 @@
         </div>
     </div>
 
+    <div id="toast">COPIADO!</div>
+
     <script>
-            const charMaps = {
-        gothic: { offset: 0x1D51E, upperOffset: 0x1D504 },
-        boldGothic: { offset: 0x1D586, upperOffset: 0x1D56C },
-        script: { offset: 0x1D4EA, upperOffset: 0x1D4D0 },
-        doubleStruck: { offset: 0x1D552, upperOffset: 0x1D538 },
-        monospace: { offset: 0x1D68A, upperOffset: 0x1D670 },
-        sans: { offset: 0x1D5BA, upperOffset: 0x1D5A0 },
-        boldSans: { offset: 0x1D5EE, upperOffset: 0x1D5D4 },
-        italicSans: { offset: 0x1D622, upperOffset: 0x1D608 },
-        boldItalicSans: { offset: 0x1D656, upperOffset: 0x1D63C }
-    };
-
-    function applyMap(text, type) {
-        return text.split('').map(char => {
-            const code = char.charCodeAt(0);
-            if (code >= 65 && code <= 90) return String.fromCodePoint(charMaps[type].upperOffset + (code - 65));
-            if (code >= 97 && code <= 122) return String.fromCodePoint(charMaps[type].offset + (code - 97));
-            return char;
-        }).join('');
-    }
-
-    function setFast(val) {
-        document.getElementById('userInput').value = val;
-        generate();
-    }
-
-    function copyText(txt) {
-        navigator.clipboard.writeText(txt);
-        const t = document.getElementById("toast");
-        t.innerText = "COPIADO!";
-        t.className = "show";
-        setTimeout(() => { t.className = t.className.replace("show", ""); }, 2000);
-    }
-
-    // Exemplos que aparecem ao carregar a página
-    const defaultExemplos = `
-        <div class="font-card"><span>𝔸𝔼𝕋ℝ𝕀𝕏 𝕋𝔼𝕏𝕋</span><span class="font-name">Linha Dupla</span><button class="btn-copy-inner" onclick="copyText('𝔸𝔼𝕋ℝ𝕀𝕏 𝕋𝔼𝕏𝕋')">COPIAR</button></div>
-        <div class="font-card"><span>𝔄𝔈𝔗ℜℑ𝔛 𝔗𝔈𝔛𝔗</span><span class="font-name">Gótico</span><button class="btn-copy-inner" onclick="copyText('𝔄𝔈𝔗ℜℑ𝔛 𝔗𝔈𝔛𝔗')">COPIAR</button></div>
-        <div class="font-card"><span>ＡＥＴＲＩＸ ＴＥＸＴ</span><span class="font-name">Vaporwave</span><button class="btn-copy-inner" onclick="copyText('ＡＥＴＲＩＸ ＴＥＸＴ')">COPIAR</button></div>
-        <div class="font-card"><span>𝒜ℰ𝒯ℛℐ𝒳 𝒯ℰ𝒳𝒯</span><span class="font-name">Manuscrito</span><button class="btn-copy-inner" onclick="copyText('𝒜ℰ𝒯ℛℐ 𝒯ℰ𝒳𝒯')">COPIAR</button></div>
-        <div class="font-card"><span>[ AETRIX ]</span><span class="font-name">Cyber</span><button class="btn-copy-inner" onclick="copyText('[ AETRIX ]')">COPIAR</button></div>
-        <div class="font-card"><span>ᴀᴇᴛʀɪx ᴛᴇxᴛ</span><span class="font-name">Small Caps</span><button class="btn-copy-inner" onclick="copyText('ᴀᴇᴛʀɪx ᴛᴇxᴛ')">COPIAR</button></div>
-    `;
-
-    let typingTimer; 
-
-    function generate() {
-        const input = document.getElementById('userInput').value;
-        const output = document.getElementById('output');
-        
-        clearTimeout(typingTimer);
-
-        if(!input) {
-            output.innerHTML = defaultExemplos;
-            return;
+        // Função específica para as Hashtags funcionarem
+        function copyTags(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            
+            // Feedback no botão
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "COPIADO!";
+            btn.style.background = "#4dff4d";
+            
+            // Feedback Toast
+            const t = document.getElementById("toast");
+            t.className = "show";
+            
+            setTimeout(() => { 
+                btn.innerText = originalText; 
+                btn.style.background = "#fff";
+                t.className = t.className.replace("show", "");
+            }, 1500);
         }
-
-        // Mostra o "Aguardando"
-        output.innerHTML = '<div class="loading-text">Aguardando geração...</div>';
-
-        // Timer para o delay (800ms)
-        typingTimer = setTimeout(() => {
-            const styles = [
-                { n: 'Gótico', v: applyMap(input, 'gothic') },
-                { n: 'Gótico Negrito', v: applyMap(input, 'boldGothic') },
-                { n: 'Linha Dupla', v: applyMap(input, 'doubleStruck') },
-                { n: 'Monospace', v: applyMap(input, 'monospace') },
-                { n: 'Manuscrito', v: applyMap(input, 'script') },
-                { n: 'Sem Serifa', v: applyMap(input, 'sans') },
-                { n: 'Sans Negrito', v: applyMap(input, 'boldSans') },
-                { n: 'Sans Itálico', v: applyMap(input, 'italicSans') },
-                { n: 'Negrito Itálico', v: applyMap(input, 'boldItalicSans') },
-                { n: 'Circulado', v: input.split('').map(c => {
-                    const code = c.charCodeAt(0);
-                    if(code>=65 && code<=90) return String.fromCodePoint(0x24B6 + (code-65));
-                    if(code>=97 && code<=122) return String.fromCodePoint(0x24D0 + (code-97));
-                    return c;
-                }).join('') },
-                { n: 'Espaçado', v: input.split('').join(' ') },
-                { n: 'Pontilhado', v: input.split('').join(' · ') },
-                { n: 'Riscado', v: input.split('').map(c => c + '\u0336').join('') },
-                { n: 'Ondulado', v: '≋ ' + input + ' ≋' },
-                { n: 'Aesthetic', v: '『' + input + '』' },
-                { n: 'Small Caps', v: input.toLowerCase().split('').map(c => {
-                    const m = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᵗ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
-                    return m[c] || c;
-                }).join('') },
-                { n: 'Vaporwave', v: input.split('').map(c => c + ' ').join('').toUpperCase() },
-                { n: 'Cyber', v: '[ ' + input.toUpperCase() + ' ]' },
-                { n: 'Sombreado', v: '░' + input + '░' },
-                { n: 'Minimalista', v: input.split('').join(' ') }
-            ];
-
-            output.innerHTML = '';
-            styles.forEach(s => {
-                const div = document.createElement('div');
-                div.className = 'font-card';
-                div.innerHTML = `
-                    <span>${s.v}</span>
-                    <span class="font-name">${s.n}</span>
-                    <button class="btn-copy-inner" onclick="copyText('${s.v.replace(/'/g, "\\'")}')">COPIAR</button>
-                `;
-                output.appendChild(div);
-            });
-        }, 800); // 800 milissegundos de delay
-    }
-
-    function copiarPix() {
-        const chave = document.getElementById('chavePix').innerText;
-        navigator.clipboard.writeText(chave);
-        const btn = document.getElementById('btnPix');
-        btn.innerText = "✓";
-        setTimeout(() => { btn.innerText = "COPIAR"; }, 1500);
-    }
-
-    // Inicializar com exemplos ao carregar
-    window.onload = () => { document.getElementById('output').innerHTML = defaultExemplos; };
-</script>
+    </script>
 </body>
 </html>
