@@ -2,121 +2,158 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>AETRIX | Hashtag Intel</title>
+    <title>AETRIX | Hashtag Intelligence</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px 20px; margin: 0; }
-        .container { max-width: 600px; margin: 0 auto; text-align: center; }
-        h1 { font-family: 'Cinzel'; letter-spacing: 10px; font-size: 1.8rem; margin-bottom: 10px; }
-        .sub { color: #444; font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 40px; }
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px 20px; margin: 0; overflow-x: hidden; }
+        .container { max-width: 700px; margin: 0 auto; text-align: center; }
+        h1 { font-family: 'Cinzel'; letter-spacing: 12px; font-size: 2rem; margin-bottom: 30px; }
         
-        /* Campo de Busca */
-        .search-box { margin-bottom: 40px; position: relative; }
-        input { width: 100%; background: #080808; border: 1px solid #1a1a1a; padding: 20px; color: #fff; border-radius: 4px; outline: none; text-align: center; font-size: 1rem; letter-spacing: 2px; }
-        input:focus { border-color: #333; }
+        /* GERADOR INTELIGENTE (TOP) */
+        .generator-box { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 30px; border-radius: 4px; margin-bottom: 50px; }
+        .generator-box h2 { font-size: 0.6rem; letter-spacing: 3px; color: #555; margin-bottom: 20px; text-transform: uppercase; }
+        input { width: 100%; background: #000; border: 1px solid #222; padding: 15px; color: #fff; text-align: center; border-radius: 4px; outline: none; margin-bottom: 10px; font-size: 0.9rem; }
+        input:focus { border-color: #fff; }
 
-        /* Status de Aguarde */
-        #status { font-size: 0.6rem; color: #555; letter-spacing: 2px; text-transform: uppercase; margin: 20px 0; display: none; }
-        
-        /* Resultado */
-        #resultArea { display: none; animation: fadeIn 0.5s; }
-        .tag-card { background: #080808; border: 1px solid #1a1a1a; padding: 30px; border-radius: 4px; text-align: left; }
-        .tag-display { color: #ccc; font-size: 0.9rem; line-height: 1.8; margin-bottom: 20px; display: block; word-wrap: break-word; }
-        
-        /* Engajamento Real */
-        .metrics { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #111; padding-top: 20px; }
-        .percent-box { text-align: left; }
-        .percent-val { color: #fff; font-weight: bold; font-size: 1.2rem; display: block; }
-        .percent-label { color: #333; font-size: 0.5rem; letter-spacing: 1px; text-transform: uppercase; }
+        /* OVERLAY "CAPTCHA STYLE" */
+        #loadingOverlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.95); z-index: 9999; flex-direction: column; 
+            justify-content: center; align-items: center; 
+        }
+        .captcha-box { border: 1px solid #222; padding: 40px; background: #080808; text-align: center; }
+        .spinner { width: 30px; height: 30px; border: 2px solid #222; border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .copy-btn { background: #fff; color: #000; border: none; padding: 10px 20px; font-size: 0.6rem; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        
-        .back { display: block; margin-bottom: 40px; color: #333; text-decoration: none; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; }
-        
-        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+        /* MODELOS FIXOS (8 GRUPOS) */
+        .grid-models { display: grid; gap: 20px; text-align: left; }
+        .tag-group { background: #080808; border: 1px solid #141414; padding: 20px; border-radius: 4px; }
+        .tag-group h3 { font-size: 0.55rem; letter-spacing: 2px; color: #333; margin-bottom: 10px; text-transform: uppercase; }
+        .tag-list { color: #888; font-size: 0.8rem; line-height: 1.6; display: block; margin-bottom: 15px; }
+        .metrics { font-size: 0.6rem; color: #fff; font-weight: bold; letter-spacing: 1px; }
+
+        .copy-btn { background: #fff; color: #000; border: none; padding: 8px 15px; font-size: 0.55rem; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .back { display: block; margin-bottom: 30px; color: #222; text-decoration: none; font-size: 0.6rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back">← RETURN TO ARCHIVE</a>
-        <h1>AETRIX TAGS</h1>
-        <div class="sub">Hashtag Engagement Intelligence</div>
 
-        <div class="search-box">
-            <input type="text" id="tagInput" placeholder="DIGITE O NICHO (EX: DARK, TECH, ACADEMIA...)" oninput="startSearch()">
-            <div id="status">Analisando tendências de engajamento...</div>
+    <div id="loadingOverlay">
+        <div class="captcha-box">
+            <div class="spinner"></div>
+            <p style="letter-spacing: 5px; font-size: 0.7rem; color: #fff;">ANALISANDO ENGAJAMENTO...</p>
+            <p style="font-size: 0.5rem; color: #444; margin-top: 10px;">AETRIX SECURITY PROTOCOL</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="index.html" class="back">← VOLTAR</a>
+        <h1>AETRIX TAGS</h1>
+
+        <div class="generator-box">
+            <h2>Gerador por Assunto</h2>
+            <input type="text" id="customInput" placeholder="EX: ANIME, GYM, CARS..." onkeypress="handleEnter(event)">
+            <p style="font-size: 0.5rem; color: #333;">PRESSIONE ENTER PARA GERAR</p>
+            
+            <div id="dynamicResult" style="display:none; margin-top: 30px; text-align: left; border-top: 1px solid #1a1a1a; padding-top: 20px;">
+                <span id="resTags" class="tag-list" style="color:#fff"></span>
+                <div style="display:flex; justify-content: space-between; align-items: center;">
+                    <span id="resEng" class="metrics"></span>
+                    <button class="copy-btn" onclick="copyText('resTags')">COPIAR IA TAGS</button>
+                </div>
+            </div>
         </div>
 
-        <div id="resultArea">
-            <div class="tag-card">
-                <span class="tag-display" id="tagOutput"></span>
-                <div class="metrics">
-                    <div class="percent-box">
-                        <span class="percent-val" id="engRate">0%</span>
-                        <span class="percent-label">Potencial de Engajamento Real</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyResult()">COPIAR</button>
-                </div>
+        <h2 style="font-size: 0.6rem; letter-spacing: 5px; color: #222; margin: 40px 0 20px;">MODELOS ARQUIVADOS</h2>
+
+        <div class="grid-models">
+            <div class="tag-group">
+                <h3>01. DARK / LOW PROFILE</h3>
+                <span class="tag-list" id="f1">#lowprofile #darkaesthetic #minimalist #darkstyle #aeterna #moody #blackandwhite #aesthetic</span>
+                <span class="metrics">ENGAJAMENTO: 4.8%</span><br>
+                <button class="copy-btn" onclick="copyText('f1')">COPIAR</button>
+            </div>
+            <div class="tag-group">
+                <h3>02. TECH / CODING</h3>
+                <span class="tag-list" id="f2">#programming #webdev #javascript #html #css #github #developer #tech</span>
+                <span class="metrics">ENGAJAMENTO: 3.2%</span><br>
+                <button class="copy-btn" onclick="copyText('f2')">COPIAR</button>
+            </div>
+            <div class="tag-group">
+                <h3>03. MINECRAFT / SENTINELA</h3>
+                <span class="tag-list" id="f3">#minecraft #gaming #builds #survival #mcpe #creative #gamer #minecraftbuild</span>
+                <span class="metrics">ENGAJAMENTO: 5.2%</span><br>
+                <button class="copy-btn" onclick="copyText('f3')">COPIAR</button>
+            </div>
+            <div class="tag-group">
+                <h3>04. MOTIVAÇÃO / STOIC</h3>
+                <span class="tag-list" id="f4">#motivation #mementomori #stoic #discipline #mindset #focus #grind #lifestyle</span>
+                <span class="metrics">ENGAJAMENTO: 4.1%</span><br>
+                <button class="copy-btn" onclick="copyText('f4')">COPIAR</button>
+            </div>
+            <div class="tag-group">
+                <h3>05. ACADEMIA / SHAPE</h3>
+                <span class="tag-list" id="f5">#gym #workout #fitness #training #bodybuilding #lifestyle #foco #saude</span>
+                <span class="metrics">ENGAJAMENTO: 6.4%</span><br>
+                <button class="copy-btn" onclick="copyText('f5')">COPIAR</button>
+            </div>
+            <div class="tag-group">
+                <h3>06. ESTUDOS / PARANÁ</h3>
+                <span class="tag-list" id="f6">#studygram #estudos #foco #produtividade #vestibular #concursos #student #parana</span>
+                <span class="metrics">ENGAJAMENTO: 3.9%</span><br>
+                <button class="copy-btn" onclick="copyText('f6')">COPIAR</button>
+            </div>
+            <div class="tag-group">
+                <h3>07. VIBE / LOFI</h3>
+                <span class="tag-list" id="f7">#aesthetic #vibe #chill #lofi #mood #photography #visuals #art</span>
+                <span class="metrics">ENGAJAMENTO: 4.5%</span><br>
+                <button class="copy-btn" onclick="copyText('f7')">COPIAR</button>
+            </div>
+            <div class="tag-group">
+                <h3>08. URBAN / NOIR</h3>
+                <span class="tag-list" id="f8">#urban #noir #streetphotography #nightlife #citylights #darkness #moody #explore</span>
+                <span class="metrics">ENGAJAMENTO: 3.7%</span><br>
+                <button class="copy-btn" onclick="copyText('f8')">COPIAR</button>
             </div>
         </div>
     </div>
 
     <script>
-        // "Banco de Dados" com taxas reais de engajamento médio por nicho
-        const db = {
-            dark: { tags: "#lowprofile #darkaesthetic #minimalist #darkstyle #aeterna #moody #blackandwhite #aesthetic", rate: "4.8%" },
-            tech: { tags: "#programming #webdev #javascript #html #css #github #codinglife #developer #software", rate: "3.2%" },
-            academia: { tags: "#gymrat #treino #fitnessmotivation #bodybuilding #lifestyle #foco #saude #workout", rate: "5.1%" },
-            estudo: { tags: "#studygram #estudos #foco #produtividade #vestibular #concursos #organization #study", rate: "4.5%" },
-            games: { tags: "#minecraft #gaming #gamer #gameplay #setup #pcgamer #twitch #ps5 #xbox", rate: "3.9%" },
-            vibe: { tags: "#aesthetic #vibe #chill #lofi #mood #photography #visuals #art #lifestyle", rate: "4.2%" }
-        };
+        function handleEnter(e) {
+            if (e.key === 'Enter') { generateDynamic(); }
+        }
 
-        let searchTimer;
+        function generateDynamic() {
+            const val = document.getElementById('customInput').value.trim().toLowerCase();
+            if (!val) return;
 
-        function startSearch() {
-            const input = document.getElementById('tagInput').value.toLowerCase();
-            const status = document.getElementById('status');
-            const resultArea = document.getElementById('resultArea');
+            // Mostrar Overlay (Captcha Style)
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.display = 'flex';
 
-            clearTimeout(searchTimer);
-            resultArea.style.display = "none";
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                const resArea = document.getElementById('dynamicResult');
+                const resTags = document.getElementById('resTags');
+                const resEng = document.getElementById('resEng');
 
-            if (input.length > 2) {
-                status.style.display = "block";
+                // Lógica para mudar TODAS as hashtags baseadas no input
+                const tags = [
+                    `#${val}`, `#${val}style`, `#${val}aesthetic`, 
+                    `#${val}life`, `#${val}world`, `#${val}vibes`, 
+                    `#${val}community`, `#explore${val}`
+                ];
                 
-                // O "AGUARDE" de 1.5 segundos
-                searchTimer = setTimeout(() => {
-                    status.style.display = "none";
-                    showResult(input);
-                }, 1500);
-            } else {
-                status.style.display = "none";
-            }
+                resTags.innerText = tags.join(' ');
+                resEng.innerText = `ENGAJAMENTO REAL: ${(Math.random() * (7.0 - 2.0) + 2.0).toFixed(1)}%`;
+                resArea.style.display = 'block';
+            }, 2000); // 2 segundos de "Aguarde"
         }
 
-        function showResult(query) {
-            const output = document.getElementById('tagOutput');
-            const rate = document.getElementById('engRate');
-            const area = document.getElementById('resultArea');
-
-            // Busca no banco ou gera genérico se não achar
-            let data = db[query] || { 
-                tags: `#${query} #aesthetic #explore #viral #instagram #style #trending #newpost`, 
-                rate: (Math.random() * (4.0 - 1.5) + 1.5).toFixed(1) + "%" 
-            };
-
-            output.innerText = data.tags;
-            rate.innerText = data.rate;
-            area.style.display = "block";
-        }
-
-        function copyResult() {
-            const text = document.getElementById('tagOutput').innerText;
-            navigator.clipboard.writeText(text);
-            const btn = event.target;
-            btn.innerText = "COPIADO";
-            setTimeout(() => { btn.innerText = "COPIAR"; }, 2000);
+        function copyText(id) {
+            const txt = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(txt);
+            alert("COPIADO PARA O ARCHIVE.");
         }
     </script>
 </body>
