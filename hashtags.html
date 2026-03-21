@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>AETRIX | Hashtag Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px 20px; margin: 0; }
+        .container { max-width: 700px; margin: 0 auto; text-align: center; }
+        h1 { font-family: 'Cinzel'; letter-spacing: 10px; font-size: 1.8rem; margin-bottom: 40px; }
+        
+        .tag-group { background: #080808; border: 1px solid #1a1a1a; padding: 25px; margin-bottom: 20px; border-radius: 4px; text-align: left; }
+        .tag-group h3 { font-size: 0.7rem; letter-spacing: 3px; color: #555; margin-bottom: 15px; text-transform: uppercase; }
+        .tag-list { color: #ccc; font-size: 0.85rem; line-height: 1.6; margin-bottom: 15px; display: block; }
+        
+        .copy-btn { background: #fff; color: #000; border: none; padding: 8px 15px; font-size: 0.6rem; font-weight: bold; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; }
+        .copy-btn:hover { background: #ccc; }
+        
+        .back { display: block; margin-bottom: 40px; color: #333; text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← VOLTAR AO AETRIX</a>
+        <h1>HASHTAGS</h1>
+
+        <div class="tag-group">
+            <h3>NICHO: DARK / LOW PROFILE</h3>
+            <span class="tag-list" id="tags1">#lowprofile #darkaesthetic #minimalist #darkstyle #aeterna #moody #blackandwhite #aesthetic #urban #noir</span>
+            <button class="copy-btn" onclick="copyTags('tags1')">COPIAR GRUPO</button>
+        </div>
+
+        <div class="tag-group">
+            <h3>NICHO: TECH / CODING</h3>
+            <span class="tag-list" id="tags2">#programming #webdev #javascript #html #css #github #codinglife #developer #software #tech</span>
+            <button class="copy-btn" onclick="copyTags('tags2')">COPIAR GRUPO</button>
+        </div>
+
+        <div class="tag-group">
+            <h3>NICHO: GAMING / MINECRAFT</h3>
+            <span class="tag-list" id="tags3">#minecraft #gaming #builds #survival #mcpe #creative #gamer #gameplay #minecraftbuild #sentinela</span>
+            <button class="copy-btn" onclick="copyTags('tags3')">COPIAR GRUPO</button>
+        </div>
+    </div>
+
+    <script>
+        function copyTags(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            const btn = event.target;
+            btn.innerText = "COPIADO!";
+            setTimeout(() => { btn.innerText = "COPIAR GRUPO"; }, 2000);
+        }
+    </script>
+</body>
+</html>
