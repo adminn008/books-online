@@ -150,10 +150,25 @@
             }, 2000); // 2 segundos de "Aguarde"
         }
 
+                // Função de copiar atualizada (sem o alerta chato)
         function copyText(id) {
-            const txt = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(txt);
-            alert("COPIADO PARA O ARCHIVE.");
+            const el = document.getElementById(id);
+            const txt = el.innerText;
+            
+            navigator.clipboard.writeText(txt).then(() => {
+                // Pega o botão que foi clicado
+                const btn = event.target;
+                const originalText = btn.innerText;
+                
+                // Feedback visual discreto no próprio botão
+                btn.innerText = "COPIADO";
+                btn.style.color = "#4dff4d"; // Um verde neon bem sutil
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.color = "#000";
+                }, 1500);
+            });
         }
     </script>
 </body>
