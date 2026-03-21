@@ -2,100 +2,13 @@
 <html lang="pt-br">
 <head>
     <meta name="description" content="AETRIX: O melhor gerador de fontes Aesthetic e Low Profile. Copie letras góticas, cursivas e símbolos minimalistas para sua bio do Instagram e Discord.">
-<meta name="keywords" content="gerador de fontes, letras diferentes, aesthetic fonts, low profile bio, símbolos copiar, Welington - Paraná">
-
+    <meta name="keywords" content="gerador de fontes, letras diferentes, aesthetic fonts, low profile bio, símbolos copiar, Welington - Paraná">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AetrixText | Gerador de letras e fontes estilizadas</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
-        .apoio-container {
-    width: 100%;
-    max-width: 700px;
-    margin: 60px auto;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-.apoio-box {
-    background: #080808;
-    border: 1px solid #1a1a1a;
-    padding: 30px;
-    text-align: center;
-    border-radius: 4px;
-}
-
-.apoio-box h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    letter-spacing: 5px;
-    margin: 0 0 10px 0;
-    color: #fff;
-}
-
-.apoio-box p {
-    font-size: 0.7rem;
-    color: #444;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.pix-wrapper {
-    display: inline-flex;
-    align-items: center;
-    background: #000;
-    border: 1px solid #222;
-    padding: 5px 5px 5px 15px;
-    border-radius: 4px;
-}
-
-#chavePix {
-    font-family: 'monospace';
-    font-size: 0.75rem;
-    color: #888;
-    margin-right: 15px;
-}
-
-#btnPix {
-    background: #fff;
-    color: #000;
-    border: none;
-    padding: 10px 15px;
-    font-size: 0.6rem;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: 0.3s;
-}
-
-#btnPix:hover {
-    background: #ccc;
-}
-
-        .pix-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 10px;
-}
-
-.pix-header svg {
-    opacity: 0.8;
-}
-
-.apoio-container { width: 100%; max-width: 700px; margin: 60px auto; padding: 0 20px; box-sizing: border-box; }
-.apoio-box { background: #080808; border: 1px solid #1a1a1a; padding: 30px; text-align: center; border-radius: 4px; }
-.apoio-box h3 { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 5px; margin: 0; color: #fff; }
-.apoio-box p { font-size: 0.7rem; color: #444; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-.pix-wrapper { display: inline-flex; align-items: center; background: #000; border: 1px solid #222; padding: 5px 5px 5px 15px; border-radius: 4px; }
-#chavePix { font-family: 'monospace'; font-size: 0.75rem; color: #888; margin-right: 15px; }
-#btnPix { background: #fff; color: #000; border: none; padding: 10px 15px; font-size: 0.6rem; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-
-
-        :root { --bg: #050505; --accent: #ffffff; --card: #0d0d0d; --sub: #555; --border: #1a1a1a; }
+        :root { --bg: #050505; --accent: #ffffff; --card: #080808; --sub: #444; --border: #1a1a1a; }
         body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
         header { padding: 80px 20px 40px; text-align: center; }
@@ -124,9 +37,17 @@
         .font-card span:first-child { font-size: 1.3rem; word-break: break-all; flex-grow: 1; }
         .font-name { font-size: 0.5rem; color: #333; text-transform: uppercase; letter-spacing: 2px; text-align: right; min-width: 90px; margin-right: 15px; }
         
-        /* Botão Copiar Interno */
         .btn-copy-inner { background: #fff; color: #000; border: none; padding: 8px 12px; font-size: 0.6rem; font-weight: bold; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; }
         .btn-copy-inner:hover { background: #ccc; }
+
+        /* Estilo do Pix */
+        .apoio-container { width: 100%; max-width: 700px; margin: 60px auto; padding: 0 20px; box-sizing: border-box; }
+        .apoio-box { background: #080808; border: 1px solid #1a1a1a; padding: 30px; text-align: center; border-radius: 4px; }
+        .apoio-box h3 { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 5px; margin: 0 0 10px 0; color: #fff; }
+        .apoio-box p { font-size: 0.7rem; color: #444; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .pix-wrapper { display: inline-flex; align-items: center; background: #000; border: 1px solid #222; padding: 5px 5px 5px 15px; border-radius: 4px; }
+        #chavePix { font-family: 'monospace'; font-size: 0.75rem; color: #888; margin-right: 15px; }
+        #btnPix { background: #fff; color: #000; border: none; padding: 10px 15px; font-size: 0.6rem; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
 
         footer { width: 100%; background: #020202; border-top: 1px solid var(--border); padding: 60px 0; margin-top: auto; }
         .footer-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 0 40px; }
@@ -140,10 +61,9 @@
         @keyframes fadeInOut { from {opacity: 0;} to {opacity: 1;} }
 
         @media (max-width: 600px) { .info-grid, .footer-content { grid-template-columns: 1fr; } .font-card { flex-direction: column; gap: 15px; text-align: center; } .font-name { text-align: center; margin: 0; } }
-
     </style>
 </head>
-<body>
+<body onload="generate()">
 
     <header>
         <h1>AETRIX</h1>
@@ -151,15 +71,14 @@
     </header>
 
     <div class="container">
-        
         <div class="info-grid">
             <div class="info-box">
                 <h4>Instruções</h4>
-                <p>Insira seu texto, escolha o estilo que mais combina com seu perfil e clique no botão para copiar.</p>
+                <p>Insira seu texto, escolha o estilo que mais combina com seu perfil e copie.</p>
             </div>
             <div class="info-box atencao">
                 <h4>Atenção</h4>
-                <p>Algumas redes sociais podem não suportar todos os caracteres. Teste antes de publicar em sua bio.</p>
+                <p>Algumas redes podem não suportar todos os caracteres. Teste antes de usar.</p>
             </div>
         </div>
 
@@ -176,23 +95,7 @@
         </div>
 
         <div class="results" id="output">
-            <div class="font-card">
-                <span>𝔸𝔼𝕋ℝ𝕀𝕏 𝕋𝔼𝕏𝕋</span>
-                <span class="font-name">Linha Dupla</span>
-                <button class="btn-copy-inner" onclick="copyText('𝔸𝔼𝕋ℝ𝕀𝕏 𝕋𝔼𝕏𝕋')">COPIAR</button>
             </div>
-            <div class="font-card">
-                <span>𝔄𝔈𝔗ℜℑ𝔛 𝔗𝔈𝔛𝔗</span>
-                <span class="font-name">Gótico</span>
-                <button class="btn-copy-inner" onclick="copyText('𝔄𝔈𝔗ℜℑ𝔛 𝔗𝔈𝔛𝔗')">COPIAR</button>
-            </div>
-            <div class="font-card">
-                <span>ＡＥＴＲＩＸ ＴＥＸＴ</span>
-                <span class="font-name">Vaporwave</span>
-                <button class="btn-copy-inner" onclick="copyText('ＡＥＴＲＩＸ ＴＥＸＴ')">COPIAR</button>
-            </div>
-        </div>
-
     </div>
 
     <footer>
@@ -203,7 +106,6 @@
                 <a href="privacidade.html">Privacidade</a>
                 <a href="faq.html">FAQ</a>
                 <a href="fale-conosco.html">Fale Conosco</a>
-                <a href="sobre.html">Nossa História</a>
             </div>
             <div class="footer-section">
                 <h5>FAQ</h5>
@@ -212,30 +114,24 @@
             </div>
             <div class="footer-section">
                 <h5>Sobre</h5>
-                <p>Aetrix é um laboratório de estética digital focado em minimalismo e alta tecnologia tipográfica. Feito por Welington.</p>
+                <p>Aetrix é um laboratório de estética digital focado em minimalismo. Feito por Welington.</p>
             </div>
         </div>
-        <div class="copyright">AETRIXTEXT ARCHIVE © 2023 - 2026 // PARANÁ - BRASIL</div>
-
+        
         <div class="apoio-container">
             <div class="apoio-box">
-                <div class="pix-header">
-                    <svg width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M362.4 123.6L274.6 35.8c-10.3-10.3-27-10.3-37.3 0L149.6 123.6c-10.3 10.3-10.3 27 0 37.3l87.8 87.8c10.3 10.3 27 10.3 37.3 0l87.8-87.8c10.2-10.3 10.2-27-.1-37.3zm-106.5 83.1c-2.3 2.3-6.1 2.3-8.4 0l-63.9-63.9c-2.3-2.3-2.3-6.1 0-8.4l63.9-63.9c2.3-2.3 6.1-2.3 8.4 0l63.9 63.9c2.3 2.3 2.3 6.1 0 8.4l-63.9 63.9z" fill="#fff"/>
-                        <path d="M149.6 351.1l87.8 87.8c10.3 10.3 27 10.3 37.3 0l87.8-87.8c10.3-10.3 10.3-27 0-37.3l-87.8-87.8c-10.3-10.3-27-10.3-37.3 0l-87.8 87.8c-10.3 10.3-10.3 27.1 0 37.3zm106.5-83.1c2.3-2.3 6.1-2.3 8.4 0l63.9 63.9c2.3 2.3 2.3 6.1 0 8.4l-63.9 63.9c-2.3 2.3-6.1 2.3-8.4 0l-63.9-63.9c-2.3-2.3-2.3-6.1 0-8.4l63.9-63.9z" fill="#fff"/>
-                    </svg>
-                    <h3>APOIE O PROJETO</h3>
-                </div>
-                <p>Contribua com a manutenção do servidor via PIX.</p>
+                <h3>APOIE O PROJETO</h3>
+                <p>Contribua com a manutenção via PIX.</p>
                 <div class="pix-wrapper">
                     <span id="chavePix">0df8fcd3-dffc-4265-8464-5a60badef88c</span>
                     <button onclick="copiarPix()" id="btnPix">COPIAR</button>
                 </div>
             </div>
         </div>
+        <div class="copyright">AETRIXTEXT ARCHIVE © 2023 - 2026 // PARANÁ - BRASIL</div>
     </footer>
 
-    <div id="toast">COPIADO! OBRIGADO.</div>
+    <div id="toast">COPIADO!</div>
 
     <script>
     const charMaps = {
@@ -259,32 +155,10 @@
         }).join('');
     }
 
-    function setFast(val) {
-        document.getElementById('userInput').value = val;
-        generate();
-    }
-
-    function copyText(txt) {
-        navigator.clipboard.writeText(txt);
-        const t = document.getElementById("toast");
-        t.innerText = "COPIADO!";
-        t.className = "show";
-        setTimeout(() => { t.className = t.className.replace("show", ""); }, 2000);
-    }
-
     function generate() {
-        const input = document.getElementById('userInput').value;
+        const input = document.getElementById('userInput').value || "AETRIX TEXT";
         const output = document.getElementById('output');
         
-        if(!input) {
-            output.innerHTML = `
-                <div class="font-card"><span>𝔸𝔼𝕋ℝ𝕀𝕏 𝕋𝔼𝕏𝕋</span><span class="font-name">Linha Dupla</span><button class="btn-copy-inner" onclick="copyText('𝔸𝔼𝕋ℝ𝕀𝕏 𝕋𝔼𝕏𝕋')">COPIAR</button></div>
-                <div class="font-card"><span>𝔄𝔈𝔗ℜℑ𝔛 𝔗𝔈𝔛𝔗</span><span class="font-name">Gótico</span><button class="btn-copy-inner" onclick="copyText('𝔄𝔈𝔗ℜℑ𝔛 𝔗𝔈𝔛𝔗')">COPIAR</button></div>
-                <div class="font-card"><span>ＡＥＴＲＩＸ ＴＥＸＴ</span><span class="font-name">Vaporwave</span><button class="btn-copy-inner" onclick="copyText('ＡＥＴＲＩＸ ＴＥＸＴ')">COPIAR</button></div>
-            `;
-            return;
-        }
-
         const styles = [
             { n: 'Gótico', v: applyMap(input, 'gothic') },
             { n: 'Gótico Negrito', v: applyMap(input, 'boldGothic') },
@@ -301,6 +175,12 @@
                 if(code>=97 && code<=122) return String.fromCodePoint(0x24D0 + (code-97));
                 return c;
             }).join('') },
+            { n: 'Quadrado', v: input.split('').map(c => {
+                const code = c.charCodeAt(0);
+                if(code>=65 && code<=90) return String.fromCodePoint(0x1F130 + (code-65));
+                if(code>=97 && code<=122) return String.fromCodePoint(0x1F130 + (code-97));
+                return c;
+            }).join('') },
             { n: 'Espaçado', v: input.split('').join(' ') },
             { n: 'Pontilhado', v: input.split('').join(' · ') },
             { n: 'Riscado', v: input.split('').map(c => c + '\u0336').join('') },
@@ -308,6 +188,7 @@
             { n: 'Ondulado', v: '≋ ' + input + ' ≋' },
             { n: 'Aesthetic', v: '『' + input + '』' },
             { n: 'Japonês-Vibe', v: '【' + input + '】' },
+            { n: 'Ceta-Vibe', v: '» ' + input + ' «' },
             { n: 'Small Caps', v: input.toLowerCase().split('').map(c => {
                 const m = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᵗ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
                 return m[c] || c;
@@ -317,7 +198,11 @@
             { n: 'Cyber', v: '[ ' + input.toUpperCase() + ' ]' },
             { n: 'Sombreado', v: '░' + input + '░' },
             { n: 'Linha Mínima', v: '— ' + input + ' —' },
-            { n: 'Minimalista', v: input.split('').join(' ') }
+            { n: 'Minimalista', v: input.split('').join(' ') },
+            { n: 'Glitch', v: '† ' + input + ' †' },
+            { n: 'Arqueado', v: '◜' + input + '◝' },
+            { n: 'Seta Dark', v: '➔ ' + input },
+            { n: 'Aetrix Spec', v: '◢ ' + input + ' ◣' }
         ];
 
         output.innerHTML = '';
@@ -331,6 +216,18 @@
             `;
             output.appendChild(div);
         });
+    }
+
+    function setFast(val) {
+        document.getElementById('userInput').value = val;
+        generate();
+    }
+
+    function copyText(txt) {
+        navigator.clipboard.writeText(txt);
+        const t = document.getElementById("toast");
+        t.className = "show";
+        setTimeout(() => { t.className = t.className.replace("show", ""); }, 2000);
     }
 
     function copiarPix() {
